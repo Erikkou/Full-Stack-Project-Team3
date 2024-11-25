@@ -1,0 +1,2 @@
+# Docker configuratie voor Symfony
+
