@@ -1,0 +1,17 @@
+{
+    "name": "my_project/backend",
+    "description": "Symfony backend for scori2 project",
+    "require": {
+        "php": "^8.1",
+        "symfony/symfony": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/routing": "^5.4",
+        "symfony/dotenv": "*",
+        "symfony/framework-bundle": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
