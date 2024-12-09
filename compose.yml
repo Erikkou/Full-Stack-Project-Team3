@@ -2,7 +2,6 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
     container_name: symfony_app
     restart: unless-stopped
     volumes:
