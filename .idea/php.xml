@@ -75,7 +75,6 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/cache" />
       <path value="$PROJECT_DIR$/backend/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/backend/vendor/symfony/config" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/backend/vendor/doctrine/common" />
@@ -89,7 +88,6 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/dotenv" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/backend/vendor/doctrine/cache" />
-      <path value="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/password-hasher" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/property-info" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/security-core" />
@@ -108,6 +106,8 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/translation-contracts" />
       <path value="$PROJECT_DIR$/backend/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/config" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
