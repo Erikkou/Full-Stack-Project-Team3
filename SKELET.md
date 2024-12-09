@@ -67,3 +67,10 @@ Als je nieuwe PHP dependencies toevoegt zorg ervoor dat je de volgende commando'
 ### Problemen oplossen
 Als je problemen ondervindt controleer dan de logs van de containers:
 - docker compose logs
+
+
+### Problemen met bestandsrechten
+
+Controleer de rechten van je projectdirectory (op je hostmachine) en zorg ervoor dat deze volledig toegankelijk is voor de Docker container, ga naar je projectmap en voer het volgende commando uit::
+
+sudo chmod -R 777 .

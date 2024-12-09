@@ -1,0 +1,38 @@
+/* frontend/src/App.css */
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin: 0 15px;
+  }
+  
+  footer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+  }
+  
+  @media (max-width: 600px) {
+    .header nav ul {
+      display: block;
+    }
+  
+    .header nav ul li {
+      display: block;
+      margin: 5px 0;
+    }
+  }
+  
