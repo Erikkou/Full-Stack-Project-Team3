@@ -1,26 +1,29 @@
-# backend/Dockerfile
-FROM php:8.1-fpm
+# Gebruik de officiële PHP 8.2 FPM afbeelding
+FROM php:8.2-fpm
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpq-dev \
     libzip-dev \
+    libsodium-dev \
     unzip \
     git \
     nginx \
-    && docker-php-ext-install intl pdo pdo_mysql zip
+    && docker-php-ext-install intl pdo pdo_mysql zip sodium \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Stel de werkmap in
 WORKDIR /var/www
 
-# Copy existing application directory contents
+# Kopieer de applicatiecode naar de container
 COPY . .
 
-# Copy environment variables
+# Kopieer omgevingsvariabelenbestand
 COPY .env /var/www/.env
 
 # Install Symfony dependencies

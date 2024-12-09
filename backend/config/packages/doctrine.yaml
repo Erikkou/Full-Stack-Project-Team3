@@ -1,7 +1,6 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-        server_version: '11.6.2'
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
 
@@ -44,6 +43,3 @@ when@prod:
                     adapter: cache.app
                 doctrine.system_cache_pool:
                     adapter: cache.system
-doctrine_migrations:
-    migrations_paths:
-        'App\Migrations': '%kernel.project_dir%/migrations'
