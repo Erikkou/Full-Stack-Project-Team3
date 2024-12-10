@@ -35,4 +35,14 @@
       margin: 5px 0;
     }
   }
+
+  .App h2 {
+    color: #444;
+    margin-top: 1rem;
+  }
+  
+  .App p {
+    color: #666;
+    line-height: 1.5;
+  }
   
