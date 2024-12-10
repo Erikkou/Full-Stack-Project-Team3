@@ -1,12 +1,21 @@
-// frontend/src/components/Main.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/components/Main.css';
 
 const Main = () => {
+  const navigate = useNavigate();
+
   return (
-    <main>
-      <h2>Hoofdinformatie</h2>
-      <p>Welkom bij de hoofdsectie van mijn React-app!</p>
-    </main>
+    <div className="main-page">
+      <div className="main-buttons">
+        <button className="main-btn signup-btn" onClick={() => navigate('/signup')}>
+          Aanmelden
+        </button>
+        <button className="main-btn login-btn" onClick={() => navigate('/login')}>
+          Log in
+        </button>
+      </div>
+    </div>
   );
 };
 
