@@ -1,36 +1,37 @@
 // frontend/src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import './App.css';
-// import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
-import Footer from './components/Footer';
+import SignUp from './components/SignUp';
+import Login from './components/Login';
+import About from './components/About';
 import BackgroundSection from './components/BackgroundSection';
 
 const App = () => {
+  const [currentSection, setCurrentSection] = useState('main');
+
+  const showMain = () => setCurrentSection('main');
+  const showSignUp = () => setCurrentSection('signup');
+  const showLogin = () => setCurrentSection('login');
+  const showAbout = () => setCurrentSection('about');
+
   return (
-    <Router>
-      <div className="App">   
-        
-        <Navbar />
-        <BackgroundSection />
-        
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route
-            path="/about"
-            element={
-              <>
-                <h2>Over Ons</h2>
-                <p>Dit is een voorbeeldpagina over de app.</p>
-              </>
-            }
-          />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <div className="App">
+      <Navbar 
+        showMain={showMain} 
+        showSignUp={showSignUp} 
+        showLogin={showLogin} 
+        showAbout={showAbout} 
+      />
+      <BackgroundSection />
+
+      {/* Render de juiste sectie op basis van de currentSection state */}
+      {currentSection === 'main' && <Main />}
+      {currentSection === 'signup' && <SignUp />}
+      {currentSection === 'login' && <Login />}
+      {currentSection === 'about' && <About />}
+    </div>
   );
 };
 

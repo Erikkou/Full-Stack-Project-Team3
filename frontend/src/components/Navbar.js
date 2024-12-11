@@ -1,19 +1,22 @@
+// frontend/src/components/Navbar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../styles/components/Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ showMain, showSignUp, showLogin, showAbout }) => {
   return (
     <nav className="navbar">
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <a className="navbar-link" onClick={showMain}>Home</a>
         </li>
         <li>
-          <Link to="/about">Over Ons</Link>
+          <a className="navbar-link" onClick={showSignUp}>Aanmelden</a>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <a className="navbar-link" onClick={showLogin}>Inloggen</a>
+        </li>
+        <li>
+          <a className="navbar-link" onClick={showAbout}>Over Ons</a>
         </li>
       </ul>
     </nav>
