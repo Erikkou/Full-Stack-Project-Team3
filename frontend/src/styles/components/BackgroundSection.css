@@ -4,7 +4,11 @@
   position: relative;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   height: 100vh;
+  width: 100%;
+  position: relative; /* Nodig voor positionering van overlay content */
   color: white;
   display: flex;
   align-items: center;
@@ -23,8 +27,13 @@
 }
 
 .content {
-  position: relative;
-  z-index: 2; /* Zorg dat de content boven de overlay staat */
+  position: absolute; /* Zorg dat de inhoud over de afbeelding staat */
+  top: 50%; /* Positioneer de inhoud verticaal gecentreerd */
+  left: 50%; /* Positioneer de inhoud horizontaal gecentreerd */
+  transform: translate(-50%, -50%); /* Perfect centeren */
+  text-align: center;
+  color: white; /* Tekstkleur wit om contrast te bieden */
+  z-index: 2; /* Zorgt dat dit boven de achtergrond staat */
 }
 
 .content h1 {
@@ -35,3 +44,15 @@
 .content p {
   font-size: 1.5rem;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden; /* Voorkom horizontaal scrollen */
+}
+
+html {
+  height: 100%;
+}
+
