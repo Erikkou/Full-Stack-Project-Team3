@@ -1,6 +1,6 @@
 // frontend/src/components/Footer.js
 import React from 'react';
-import '../styles/components/Footer.css';  // Zorg ervoor dat het pad correct is
+import '../styles/components/Footer.css';  
 
 const Footer = () => {
   return (

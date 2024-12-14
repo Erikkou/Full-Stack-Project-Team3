@@ -10,15 +10,15 @@ const Navbar = ({ showMain, showSignUp, showLogin, showAbout }) => {
           <a className="navbar-link" onClick={showMain}>Home</a>
         </li>
         <li>
-          <a className="navbar-link" onClick={showSignUp}>Aanmelden</a>
+          <a className="navbar-link" onClick={showAbout}>Over Ons</a>
         </li>
         <li>
           <a className="navbar-link" onClick={showLogin}>Inloggen</a>
         </li>
         <li>
-          <a className="navbar-link" onClick={showAbout}>Over Ons</a>
+          <a className="navbar-link" onClick={showSignUp}>Aanmelden</a>
         </li>
-      </ul>
+        </ul>
     </nav>
   );
 };

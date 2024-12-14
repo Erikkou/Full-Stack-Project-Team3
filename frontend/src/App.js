@@ -1,38 +1,34 @@
-// frontend/src/App.js
+// src/App.js
 import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Main from './components/Main';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
-import About from './components/About';
-import BackgroundSection from './components/BackgroundSection';
 import Footer from './components/Footer';
+import BackgroundSection from './components/BackgroundSection';
 
 const App = () => {
-  const [currentSection, setCurrentSection] = useState('main');
+  const [currentPage, setCurrentPage] = useState('main');
 
-  const showMain = () => setCurrentSection('main');
-  const showSignUp = () => setCurrentSection('signup');
-  const showLogin = () => setCurrentSection('login');
-  const showAbout = () => setCurrentSection('about');
+  const handleLoginClick = () => {
+    setCurrentPage('login');
+  };
+
+  const handleSignUpClick = () => {
+    setCurrentPage('signup');
+  };
 
   return (
     <div className="App">
-      <Navbar 
-        showMain={showMain} 
-        showSignUp={showSignUp} 
-        showLogin={showLogin} 
-        showAbout={showAbout} 
+      <Navbar
+        showMain={() => setCurrentPage('main')}
+        showSignUp={handleSignUpClick}
+        showLogin={handleLoginClick}
       />
-      <BackgroundSection />
+      {currentPage === 'main' && (
+        <BackgroundSection handleLoginClick={handleLoginClick} handleSignUpClick={handleSignUpClick} />
+      )}
+      {currentPage === 'login' && <div>Login Page Placeholder</div>}
+      {currentPage === 'signup' && <div>Signup Page Placeholder</div>}
       <Footer />
-
-      {/* Render de juiste sectie op basis van de currentSection state */}
-      {currentSection === 'main' && <Main />}
-      {currentSection === 'signup' && <SignUp />}
-      {currentSection === 'login' && <Login />}
-      {currentSection === 'about' && <About />}
     </div>
   );
 };
