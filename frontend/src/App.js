@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import About from './components/About';
 import BackgroundSection from './components/BackgroundSection';
+import Footer from './components/Footer';
 
 const App = () => {
   const [currentSection, setCurrentSection] = useState('main');
@@ -25,6 +26,7 @@ const App = () => {
         showAbout={showAbout} 
       />
       <BackgroundSection />
+      <Footer />
 
       {/* Render de juiste sectie op basis van de currentSection state */}
       {currentSection === 'main' && <Main />}
