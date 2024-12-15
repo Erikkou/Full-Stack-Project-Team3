@@ -6,7 +6,7 @@ ERROR
 
 
 steps:
-docker exec -u root -it <container_name_or_id> bash
+docker exec -u root -it react_app bash
 chown -R node:node /app/node_modules/
 exit
 rm -rf node_modules/.cache/.eslintcache

@@ -65,10 +65,24 @@ html {
   background: transparent;
 }
 
+.main-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  margin-right: 2.5rem;
+  color: #333;
+}
+
+.main-container p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  color: #555;
+}
 .button-container {
   display: flex;
   flex-direction: row; /* Plaatst de knoppen naast elkaar */
   align-items: center;
+  margin-right: 2.5rem;
   gap: 3rem; /* Afstand tussen de knoppen */
 }
 

@@ -2,7 +2,8 @@
 import React from 'react';
 import '../styles/components/Navbar.css';
 
-const Navbar = ({ showMain, showSignUp, showLogin, showAbout }) => {
+
+const Navbar = ({ showMain, showContacts, showAbout }) => {
   return (
     <nav className="navbar">
       <ul>
@@ -13,7 +14,7 @@ const Navbar = ({ showMain, showSignUp, showLogin, showAbout }) => {
           <a className="navbar-link" onClick={showAbout}>Over Ons</a>
         </li>
         <li>
-          <a className="navbar-link" onClick={showAbout}>Contacts</a>
+          <a className="navbar-link" onClick={showContacts}>Contacts</a>
         </li>
         </ul>
     </nav>

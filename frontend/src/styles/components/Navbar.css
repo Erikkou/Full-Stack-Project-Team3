@@ -36,3 +36,7 @@
 .navbar-link:hover {
   color: #9bdd95; /* Bijvoorbeeld een gele kleur bij hover */
 }
+
+.navbar a.active {
+    border-bottom: 2px solid #ffdd57;
+}
