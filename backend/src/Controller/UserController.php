@@ -57,4 +57,22 @@ class UserController extends AbstractController
     }
 
 
+    #[Route('/api/me', name: 'api_me', methods: ['GET'])]
+    public function getMe(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return new JsonResponse(['message' => 'Not authenticated'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
+
 }

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,8 +32,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-//    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'user')]
-//    private $teams;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Team::class)]
+    private $teams;
 
     public function __construct()
     {
@@ -75,9 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(UserPasswordHasherInterface $passwordHasher, string $plainPassword): static
+    public function setPassword(string $password): static
     {
-        $this->password = $passwordHasher->hashPassword($this, $plainPassword);
+        $this->password = $password;
 
         return $this;
     }
@@ -128,7 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Implement this method if needed
+
     }
 
     public function getUserIdentifier(): string
