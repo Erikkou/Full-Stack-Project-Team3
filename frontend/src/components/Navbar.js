@@ -1,11 +1,15 @@
 // frontend/src/components/Navbar.js
 import React from 'react';
 import '../styles/components/Navbar.css';
+import logo from '../image/logo.png';
 
 
 const Navbar = ({ showMain, showContacts, showAbout }) => {
   return (
     <nav className="navbar">
+      <div className="navbar-logo">
+        <img src={logo} alt="Scori2 Logo" className="logo" />
+      </div>
       <ul>
         <li>
           <a className="navbar-link" onClick={showMain}>Home</a>
