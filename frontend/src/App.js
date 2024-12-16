@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -6,6 +5,7 @@ import Footer from './components/Footer';
 import BackgroundSection from './components/BackgroundSection';
 import MainContent from './components/MainContent';
 import LoginPage from './components/LoginPage';
+import SignUpPage from './components/SignUpPage';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('main');
@@ -44,9 +44,7 @@ const App = () => {
       )}
       {currentPage === 'signup' && (
         <BackgroundSection>
-          <div style={{ color: 'white', textAlign: 'center' }}>
-            <h2>Signup Page Placeholder</h2>
-          </div>
+          <SignUpPage handleBackClick={handleBackClick} /> {/* Voeg SignUpPage hier toe */}
         </BackgroundSection>
       )}
       <Footer />
