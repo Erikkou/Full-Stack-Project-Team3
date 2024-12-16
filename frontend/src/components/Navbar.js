@@ -16,10 +16,13 @@ const Navbar = ({ showMain, showContacts, showAbout }) => {
           <a className="navbar-link" onClick={showMain}>Home</a>
         </li>
         <li>
-          <a className="navbar-link" onClick={showAbout}>Over Ons</a>
+          <a className="navbar-link" onClick={showAbout}>Blog</a>
         </li>
         <li>
-          <a className="navbar-link" onClick={showContacts}>Contacts</a>
+          <a className="navbar-link" onClick={showContacts}>About</a>
+        </li>
+        <li>
+          <a className="navbar-link" href="/login">Contacts</a>
         </li>
         </ul>
     </nav>

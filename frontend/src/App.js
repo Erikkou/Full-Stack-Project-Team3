@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackgroundSection from './components/BackgroundSection';
 import MainContent from './components/MainContent';
+import LoginPage from './components/LoginPage';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('main');
@@ -15,6 +16,10 @@ const App = () => {
 
   const handleSignUpClick = () => {
     setCurrentPage('signup');
+  };
+
+  const handleBackClick = () => {
+    setCurrentPage('main');
   };
 
   return (
@@ -34,9 +39,7 @@ const App = () => {
       )}
       {currentPage === 'login' && (
         <BackgroundSection>
-          <div style={{ color: 'white', textAlign: 'center' }}>
-            <h2>Login Page Placeholder</h2>
-          </div>
+          <LoginPage handleBackClick={handleBackClick} />
         </BackgroundSection>
       )}
       {currentPage === 'signup' && (
