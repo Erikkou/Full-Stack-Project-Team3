@@ -45,9 +45,10 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $user = new User();
+        $hashedPassword = $passwordHasher->hashPassword($user, $data['password'] ?? '');
         $user->setUsername($data['username'])
             ->setEmail($data['email'])
-            ->setPassword($passwordHasher, $data['password'] ?? '')
+            ->setPassword($hashedPassword)
             ->setRoles($data['roles']);
 
         $em->persist($user);

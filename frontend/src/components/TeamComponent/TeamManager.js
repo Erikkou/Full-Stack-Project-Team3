@@ -10,7 +10,7 @@ const TeamManager = () => {
 
     const fetchTeams = async () => {
         try {
-            const response = await Api.get('/teams');
+            const response = await Api.get('api/teams');
             setTeams(response.data);
         } catch (error) {
             console.error('Error fetching teams:', error);
@@ -21,7 +21,7 @@ const TeamManager = () => {
     const handleAddTeam = async () => {
         if (!newTeamName) return;
         try {
-            const response = await Api.post('/teams', {teamName: newTeamName});
+            const response = await Api.post('api/teams', {teamName: newTeamName});
             setTeams([...teams, response.data]); // Add the new team to the list
             setNewTeamName(''); // Clear input
         } catch (error) {
@@ -33,7 +33,7 @@ const TeamManager = () => {
     const handleEditTeam = async () => {
         if (!editTeamName) return;
         try {
-            const response = await Api.put(`/teams/${editTeamId}`, {teamName: editTeamName});
+            const response = await Api.put(`api/teams/${editTeamId}`, {teamName: editTeamName});
             setTeams(teams.map((team) => (team.id === editTeamId ? response.data : team)));
             setEditTeamId(null); // Clear edit mode
             setEditTeamName(''); // Clear input

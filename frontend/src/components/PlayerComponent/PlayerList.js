@@ -8,7 +8,7 @@ const PlayerList = () => {
 
     const fetchPlayers = async () => {
         try {
-            const response = await Api.get('/players');
+            const response = await Api.get('api/players');
             setPlayers(response.data);
         } catch (error) {
             console.error('Error fetching players:', error);
@@ -21,7 +21,7 @@ const PlayerList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await Api.delete(`/players/${id}`);
+            await Api.delete(`api/players/${id}`);
             setPlayers(players.filter((player) => player.id !== id));
         } catch (error) {
             console.error('Error deleting player:', error);

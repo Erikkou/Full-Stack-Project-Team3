@@ -36,7 +36,8 @@ class TeamController extends AbstractController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route('/api/team', name: 'team_new', methods: ['POST'])]
+
+    #[Route('/api/teams', name: 'team_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();
@@ -61,7 +62,7 @@ class TeamController extends AbstractController
         return new JsonResponse(['message' => 'Team created successfully', 'teamId' => $team->getId()], Response::HTTP_CREATED);
     }
 
-    #[Route('/api/team/{id}', name: 'team_edit', methods: ['PUT'])]
+    #[Route('/api/teams/{id}', name: 'team_edit', methods: ['PUT'])]
     public function edit(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();
@@ -87,7 +88,7 @@ class TeamController extends AbstractController
         return new JsonResponse(['message' => 'Team updated successfully'], Response::HTTP_OK);
     }
 
-    #[Route('/api/team/{id}', name: 'team_delete', methods: ['DELETE'])]
+    #[Route('/api/teams/{id}', name: 'team_delete', methods: ['DELETE'])]
     public function delete(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();

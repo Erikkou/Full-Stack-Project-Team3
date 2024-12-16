@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PlayerController extends AbstractController
 {
-    #[Route('/api/player', name: 'player_list', methods: ['GET'])]
+    #[Route('/api/players', name: 'player_list', methods: ['GET'])]
     public function list(EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();
@@ -39,7 +39,7 @@ class PlayerController extends AbstractController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route('/api/player', name: 'player_new', methods: ['POST'])]
+    #[Route('/api/players', name: 'player_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();
@@ -70,7 +70,7 @@ class PlayerController extends AbstractController
         return new JsonResponse(['message' => 'Player successfully created.', 'playerId' => $player->getId()], Response::HTTP_CREATED);
     }
 
-    #[Route('/api/player/{id}', name: 'player_delete', methods: ['DELETE'])]
+    #[Route('/api/players/{id}', name: 'player_delete', methods: ['DELETE'])]
     public function delete(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();

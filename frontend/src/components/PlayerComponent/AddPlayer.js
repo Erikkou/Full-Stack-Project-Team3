@@ -8,7 +8,7 @@ const AddPlayer = ({onAdd}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await Api.post('/players', {playerName, teamId});
+            await Api.post('api/players', {playerName, teamId});
             setPlayerName('');
             setTeamId('');
             onAdd();
