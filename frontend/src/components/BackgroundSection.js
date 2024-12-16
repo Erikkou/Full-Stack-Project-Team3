@@ -21,7 +21,7 @@ const BackgroundSection = ({ handleLoginClick, handleSignUpClick }) => {
       }}
     >
       
-      <div className="main-container">
+    <div className="main-container">
       <h1>Welkom bij Scori2</h1>
       <p>De app voor voetballiefhebbers.</p>
       <div className="button-container">
