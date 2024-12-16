@@ -8,14 +8,14 @@ const LoginPage = ({ handleBackClick }) => {
         <h2 className="text-3xl font-extrabold mb-4 text-center !text-white !text-opacity-85">Inloggen</h2>
         <form>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium mb-1">
-              E-mailadres
+            <label htmlFor="username" className="block text-sm font-medium mb-1">
+              Username
             </label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je e-mailadres in"
+              placeholder="Voer je username in"
             />
           </div>
           <div className="mb-4">
