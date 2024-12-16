@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackgroundSection from './components/BackgroundSection';
+import MainContent from './components/MainContent';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('main');
@@ -24,10 +25,27 @@ const App = () => {
         showLogin={handleLoginClick}
       />
       {currentPage === 'main' && (
-        <BackgroundSection handleLoginClick={handleLoginClick} handleSignUpClick={handleSignUpClick} />
+        <BackgroundSection>
+          <MainContent
+            handleLoginClick={handleLoginClick}
+            handleSignUpClick={handleSignUpClick}
+          />
+        </BackgroundSection>
       )}
-      {currentPage === 'login' && <div>Login Page Placeholder</div>}
-      {currentPage === 'signup' && <div>Signup Page Placeholder</div>}
+      {currentPage === 'login' && (
+        <BackgroundSection>
+          <div style={{ color: 'white', textAlign: 'center' }}>
+            <h2>Login Page Placeholder</h2>
+          </div>
+        </BackgroundSection>
+      )}
+      {currentPage === 'signup' && (
+        <BackgroundSection>
+          <div style={{ color: 'white', textAlign: 'center' }}>
+            <h2>Signup Page Placeholder</h2>
+          </div>
+        </BackgroundSection>
+      )}
       <Footer />
     </div>
   );
