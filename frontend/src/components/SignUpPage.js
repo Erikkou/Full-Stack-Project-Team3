@@ -59,14 +59,7 @@ const SignUpPage = ({ handleBackClick }) => {
             Aanmelden
           </button>
           
-          {/* Terug knop */}
-          <button
-            type="button"
-            className="mt-2 w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
-            onClick={handleBackClick}
-          >
-            Terug
-          </button>
+          
         </form>
       </div>
     </div>

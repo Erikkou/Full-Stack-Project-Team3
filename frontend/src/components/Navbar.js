@@ -9,12 +9,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 text-white p-4 shadow-lg">
+    <nav className="bg-gray-800 text-white p-4 fixed top-0 eft-0 right-0 w-full shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Sectie */}
         <div className="flex items-center">
           <img
-            src="/logo.png" 
+            src="/logo.png" // Update dit pad naar jouw logo.
             alt="Logo"
             className="h-10 w-10 mr-2"
           />

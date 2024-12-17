@@ -1,23 +1,12 @@
-// src/components/BackgroundSection.js
 import React from 'react';
-import '../styles/components/BackgroundSection.css'; 
-import Image from '../image/stadium4.jpg'; 
+import Image from '../image/stadium4.jpg'; // Verwijst naar de afbeelding
 
 const BackgroundSection = ({ children }) => {
   return (
     <section
-      className="mybg"
+      className="bg-cover bg-center min-h-screen flex flex-col justify-center items-center text-center text-white"
       style={{
         backgroundImage: `url(${Image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '100vh',
-        color: 'white',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
       }}
     >
       {children}
