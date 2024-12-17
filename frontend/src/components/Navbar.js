@@ -1,30 +1,25 @@
-// frontend/src/components/Navbar.js
+// src/components/Navbar.js
 import React from 'react';
-import '../styles/components/Navbar.css'; 
-import logo from '../image/logo.png';
+import { Link } from 'react-router-dom';
+import '../styles/components/Navbar.css';
 
-
-const Navbar = ({ showMain, showContacts, showAbout }) => {
+const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <img src={logo} alt="Scori2 Logo" className="logo" />
-        <span className="logo-text">SCORI2</span>
-      </div>
       <ul>
         <li>
-          <a className="navbar-link" onClick={showMain}>Home</a>
+          <Link to="/" className="navbar-link">Home</Link>
         </li>
         <li>
-          <a className="navbar-link" onClick={showAbout}>Blog</a>
+          <Link to="/signup" className="navbar-link">Aanmelden</Link>
         </li>
         <li>
-          <a className="navbar-link" onClick={showContacts}>About</a>
+          <Link to="/login" className="navbar-link">Inloggen</Link>
         </li>
         <li>
-          <a className="navbar-link" href="/login">Contacts</a>
+          <Link to="/admin" className="navbar-link">Admin Dashboard</Link>
         </li>
-        </ul>
+      </ul>
     </nav>
   );
 };

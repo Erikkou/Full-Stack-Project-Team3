@@ -1,54 +1,31 @@
-import React, { useState } from 'react';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackgroundSection from './components/BackgroundSection';
 import MainContent from './components/MainContent';
 import LoginPage from './components/LoginPage';
-import SignUpPage from './components/SignUpPage';
+import SignupPage from './components/SignUpPage';
+import AdminDashboard from './components/AdminDashboard';
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('main');
-
-  const handleLoginClick = () => {
-    setCurrentPage('login');
-  };
-
-  const handleSignUpClick = () => {
-    setCurrentPage('signup');
-  };
-
-  const handleBackClick = () => {
-    setCurrentPage('main');
-  };
-
   return (
-    <div className="App">
-      <Navbar
-        showMain={() => setCurrentPage('main')}
-        showSignUp={handleSignUpClick}
-        showLogin={handleLoginClick}
-      />
-      {currentPage === 'main' && (
+    <Router>
+      <div className="App">
+        <Navbar />
         <BackgroundSection>
-          <MainContent
-            handleLoginClick={handleLoginClick}
-            handleSignUpClick={handleSignUpClick}
-          />
+          <Routes>
+            <Route path="/" element={<MainContent />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
         </BackgroundSection>
-      )}
-      {currentPage === 'login' && (
-        <BackgroundSection>
-          <LoginPage handleBackClick={handleBackClick} />
-        </BackgroundSection>
-      )}
-      {currentPage === 'signup' && (
-        <BackgroundSection>
-          <SignUpPage handleBackClick={handleBackClick} /> {/* Voeg SignUpPage hier toe */}
-        </BackgroundSection>
-      )}
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
