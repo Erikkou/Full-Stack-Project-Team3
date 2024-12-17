@@ -8,7 +8,9 @@ import BackgroundSection from './components/BackgroundSection';
 import MainContent from './components/MainContent';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignUpPage';
-import AdminDashboard from './components/AdminDashboard';
+// import AdminDashboard from './components/AdminDashboard';
+import AdminLayout from "./components/AdminLayout";
+import CompetitionsPage from "./pages/CompetitionsPage";
 
 const App = () => {
   return (
@@ -20,7 +22,9 @@ const App = () => {
             <Route path="/" element={<MainContent />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            {/* <Route path="/admin" element={<AdminDashboard />} /> */}
+            <Route path="/admin" element={<AdminLayout><div>Dashboard</div></AdminLayout>}/>
+            <Route path="/admin/competitions" element={<AdminLayout><CompetitionsPage /></AdminLayout>}/>
           </Routes>
         </BackgroundSection>
         <Footer />
