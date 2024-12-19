@@ -1,42 +1,48 @@
-// src/components/LoginPage.js
-import React from 'react';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../AuthContext";
 
-const LoginPage = ({ handleBackClick }) => {
+const LoginPage = () => {
+  const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    // Hier kun je login-logica toevoegen (bijv. validatie)
+    login("beheer"); // Stelt de rol in als "user"
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-full text-white">
       <div className="bg-black bg-opacity-50 p-8 rounded-xl shadow-lg w-96">
-        <h2 className="text-3xl font-extrabold mb-4 text-center !text-white !text-opacity-85">Inloggen</h2>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium mb-1">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je username in"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium mb-1">
-              Wachtwoord
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je wachtwoord in"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Inloggen
-          </button>
-          
-        </form>
+        <h2 className="text-3xl font-bold text-center mb-6 !text-white opacity-85">Log in</h2>
+        <div className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Wachtwoord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <button
+          onClick={handleLogin}
+          className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+        >
+          Log in
+        </button>
+        <p className="mt-4 text-sm text-center">
+          Nog geen account?{" "}
+          <a href="/signup" className="text-blue-400 hover:underline">
+            Aanmelden
+          </a>
+        </p>
       </div>
     </div>
   );

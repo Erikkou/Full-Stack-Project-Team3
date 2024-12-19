@@ -3,8 +3,7 @@ import React from "react";
 const AdminLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-800 text-white">
+      <aside className="w-64 bg-gray-800 text-white">
         <div className="p-4 font-bold text-center">Admin Dashboard</div>
         <nav className="mt-4">
           <ul>
@@ -19,9 +18,10 @@ const AdminLayout = ({ children }) => {
             </li>
           </ul>
         </nav>
-      </div>
-      {/* Main Content */}
-      <div className="flex-1 p-6">{children}</div>
+      </aside>
+      <main className="flex-1 p-6 bg-gray-100">
+        <div className="bg-white p-6 rounded-lg shadow-md">{children}</div>
+      </main>
     </div>
   );
 };

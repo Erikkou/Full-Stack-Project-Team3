@@ -1,69 +1,59 @@
-import React from 'react';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../AuthContext";
 
-const SignUpPage = ({ handleBackClick }) => {
+const SignupPage = () => {
+  const { login } = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = () => {
+    // Hier kun je signup-logica toevoegen
+    login("user"); // Stelt de rol in als "user"
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-full text-white">
-      {/* Achtergrond overlay */}
       <div className="bg-black bg-opacity-50 p-8 rounded-xl shadow-lg w-96">
-        {/* Titel sectie */}
-        <h2 className="text-3xl font-extrabold mb-4 text-center !text-white !text-opacity-85">
+        <h2 className="text-3xl font-bold text-center mb-6 !text-white opacity-85">Aanmelden</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Naam"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Wachtwoord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <button
+          onClick={handleSignUp}
+          className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+        >
           Aanmelden
-        </h2>
-        
-        {/* Formulier sectie */}
-        <form>
-          {/* Naam veld */}
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium mb-1">
-              Naam
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je naam in"
-            />
-          </div>
-
-          {/* E-mailadres veld */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium mb-1">
-              E-mailadres
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je e-mailadres in"
-            />
-          </div>
-          
-          {/* Wachtwoord veld */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium mb-1">
-              Wachtwoord
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Voer je wachtwoord in"
-            />
-          </div>
-          
-          {/* Aanmelden knop */}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Aanmelden
-          </button>
-          
-          
-        </form>
+        </button>
+        <p className="mt-4 text-sm text-center">
+          Al een account?{" "}
+          <a href="/login" className="text-blue-400 hover:underline">
+            Log in
+          </a>
+        </p>
       </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignupPage;
