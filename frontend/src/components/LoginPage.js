@@ -8,7 +8,7 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     // Hier kun je login-logica toevoegen (bijv. validatie)
-    login("beheer"); // Stelt de rol in als "user"
+    login("beheer"); // Stelt de rol in als "admin"
   };
 
   return (
