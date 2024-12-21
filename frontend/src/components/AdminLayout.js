@@ -39,7 +39,7 @@ const AdminLayout = () => {
   return (
     <div className="flex min-h-screen bg-gray-800 left-0 right-0 w-full opacity-90">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white fixed top-0 bottom-0 left-0 h-full">
+      <aside className="w-64 bg-gray-900 text-white fixed top-0 bottom-0 left-0 h-full">
         <div className="p-4 font-bold text-center">Admin Dashboard</div>
         <nav className="mt-4">
           <ul className="flex flex-col space-y-2">
