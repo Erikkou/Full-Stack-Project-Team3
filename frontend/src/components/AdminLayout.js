@@ -59,32 +59,32 @@ const AdminLayout = () => {
           {/* Cards Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Cards */}
-            <div className="bg-black p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-blue-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-blue-400 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">
                 League Management
               </h2>
             </div>
-            <div className="bg-red-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-red-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-red-600 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">
                 Team Management
               </h2>
             </div>
-            <div className="bg-green-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-green-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-green-400 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">
                 User Management
               </h2>
             </div>
-            <div className="bg-purple-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-purple-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-purple-600 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">
                 Match Scheduling
               </h2>
             </div>
-            <div className="bg-orange-700 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-orange-700 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-orange-500 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">
                 Results and Standings
               </h2>
             </div>
-            <div className="bg-yellow-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90">
+            <div className="bg-yellow-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-yellow-400 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">Blogs</h2>
             </div>
           </div>
@@ -94,7 +94,7 @@ const AdminLayout = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
           {/* Line Chart */}
           <div className="bg-gray-900 p-6 shadow-md rounded-lg opacity-90">
-            <h2 className="text-xl font-bold mb-4">User & Team Growth</h2>
+            <h2 className="text-xl font-bold mb-4 !text-white opacity-90">User & Team Growth</h2>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart
                 data={lineChartData}
@@ -112,7 +112,7 @@ const AdminLayout = () => {
 
           {/* Pie Charts */}
           <div className="bg-gray-900 p-6 shadow-md rounded-lg opacity-90">
-            <h2 className="text-xl font-bold mb-4">User & Sport Distribution</h2>
+            <h2 className="text-xl font-bold mb-4 !text-white opacity-90">User & Sport Distribution</h2>
             <div className="flex flex-wrap justify-around">
               {/* Pie Chart 1 */}
               <ResponsiveContainer width="45%" height={200}>
