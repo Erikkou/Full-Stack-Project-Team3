@@ -1,37 +1,7 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { lineChartData, pieChartData, pieChartData2 } from '../data/dashboardData';
 
-const lineChartData = [
-  { name: "Jan", Users: 400, Teams: 240 },
-  { name: "Feb", Users: 300, Teams: 139 },
-  { name: "Mar", Users: 500, Teams: 350 },
-  { name: "Apr", Users: 700, Teams: 400 },
-  { name: "May", Users: 600, Teams: 500 },
-];
-
-const pieChartData = [
-  { name: "Active Users", value: 60 },
-  { name: "Inactive Users", value: 30 },
-  { name: "Pending Users", value: 10 },
-];
-
-const pieChartData2 = [
-  { name: "Football", value: 45 },
-  { name: "Basketball", value: 30 },
-  { name: "Others", value: 25 },
-];
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
