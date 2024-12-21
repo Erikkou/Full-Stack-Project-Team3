@@ -1,7 +1,9 @@
 import React from "react";
 import { lineChartData, pieChartData, pieChartData2 } from '../data/dashboardData';
-
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+
+// Import the image
+import avatarImage from '../image/avatar.png';
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -12,6 +14,11 @@ const AdminLayout = () => {
       <aside className="w-64 bg-gray-900 text-white fixed top-0 bottom-0 left-0 h-full">
         <div className="p-4 font-bold text-center">Admin Dashboard</div>
         <nav className="mt-4">
+          {/* Avatar Section */}
+          <div className="flex items-center justify-center mb-6 mt-10 mb-2rem">
+            <img src={avatarImage} alt="User Avatar" className="w-20 h-20 rounded-full object-cover" />
+          </div>
+
           <ul className="flex flex-col space-y-2">
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
               <a href="/admin/competitions">Competities</a>
