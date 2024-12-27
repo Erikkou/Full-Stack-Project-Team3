@@ -72,10 +72,14 @@ const AdminLayout = () => {
 
 
             <div className="bg-orange-700 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-orange-500 transition transform hover:-translate-y-2">
-              <h2 className="text-xl font-semibold mb-4 !text-white">
-                Results and Standings
-              </h2>
+            <Link to="/admin/results-and-standings">
+            <h2 className="text-xl font-semibold mb-4 !text-white">
+              Results and Standings
+            </h2>
+            </Link>
             </div>
+
+
             <div className="bg-yellow-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-yellow-400 transition transform hover:-translate-y-2">
               <h2 className="text-xl font-semibold mb-4 !text-white">Blogs</h2>
             </div>
