@@ -10,7 +10,9 @@ import SignupPage from "./components/SignUpPage";
 import AdminLayout from "./pages/AdminLayout";
 import LeagueManagement from "./pages/LeagueManagement";
 import TeamManagement from "./pages/TeamManagement";
+import UserManagement from "./pages/UserManagement";
 import UserDashboard from "./components/UserDashboard";
+import MatchScheduling from "./pages/MatchScheduling";
 import { AuthProvider } from "./AuthContext"; // Voeg de AuthProvider toe
 
 const App = () => {
@@ -27,6 +29,8 @@ const App = () => {
               <Route path="/admin" element={<AdminLayout>Admin Content</AdminLayout>} />
               <Route path="/admin/league-management" element={<LeagueManagement />} />
               <Route path="/admin/team-management" element={<TeamManagement />} />
+              <Route path="/admin/user-management" element={<UserManagement />} />
+              <Route path="/admin/match-scheduling" element={<MatchScheduling />} />
               <Route path="/dashboard" element={<UserDashboard />} />
             </Routes>
           </BackgroundSection>
