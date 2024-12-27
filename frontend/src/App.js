@@ -7,7 +7,8 @@ import BackgroundSection from "./components/BackgroundSection";
 import MainContent from "./components/MainContent";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignUpPage";
-import AdminLayout from "./components/AdminLayout";
+import AdminLayout from "./pages/AdminLayout";
+import LeagueManagement from "./pages/LeagueManagement";
 import UserDashboard from "./components/UserDashboard";
 import { AuthProvider } from "./AuthContext"; // Voeg de AuthProvider toe
 
@@ -23,6 +24,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/admin" element={<AdminLayout>Admin Content</AdminLayout>} />
+              <Route path="/admin/league-management" element={<LeagueManagement />} />
               <Route path="/dashboard" element={<UserDashboard />} />
             </Routes>
           </BackgroundSection>
