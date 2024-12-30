@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// Dummy blogs data (to be replaced with data from the database)
+// hier moeten de teams van de db geïmporteerd worden, voor nu dummy data
 const initialBlogs = [
   {
     id: 1,

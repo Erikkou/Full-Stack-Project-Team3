@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// Dummy leagues data (to be replaced with data from the database)
+// hier moeten de teams van de db geïmporteerd worden, voor nu dummy data
 const initialLeagues = [
   { id: 1, name: "Premier League", country: "England" },
   { id: 2, name: "La Liga", country: "Spain" },
