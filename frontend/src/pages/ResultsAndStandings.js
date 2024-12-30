@@ -22,7 +22,12 @@ const ResultsAndStandings = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Results and Standings</h1>
-        
+        <Link
+          to="/admin"
+          className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Back to Dashboard
+        </Link>
       </div>
 
       {/* Results Section */}
@@ -41,12 +46,7 @@ const ResultsAndStandings = () => {
                 <p className="text-gray-400">Score: {result.score}</p>
               </div>
               <div className="mt-4 flex space-x-2">
-                <button className="bg-green-600 hover:bg-green-500 text-white font-bold py-1 px-3 rounded">
-                  Edit
-                </button>
-                <button className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-3 rounded">
-                  Remove
-                </button>
+                
               </div>
             </div>
           ))}
