@@ -113,12 +113,7 @@ const Blogs = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Blogs</h1>
-        <Link
-          to="/admin"
-          className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Back to Dashboard
-        </Link>
+        
       </div>
 
       {/* New Blog Button */}
@@ -211,7 +206,7 @@ const Blogs = () => {
       {/* Edit Blog Form */}
       {isEditing && (
         <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
-          <h2 className="text-xl font-bold mb-4">Edit Blog</h2>
+          <h2 className="text-xl font-bold mb-4 !text-white">Edit Blog</h2>
           <label className="block mb-2 text-gray-400">Title</label>
           <input
             type="text"
