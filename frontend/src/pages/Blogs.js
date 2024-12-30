@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// hier moeten de teams van de db geïmporteerd worden, voor nu dummy data
+// hier moeten de blogs van de db geïmporteerd worden, voor nu dummy data
 const initialBlogs = [
   {
     id: 1,
@@ -163,7 +163,7 @@ const Blogs = () => {
       {/* Add New Blog Form */}
       {isAdding && (
         <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
-          <h2 className="text-xl font-bold mb-4">Add New Blog</h2>
+          <h2 className="text-xl font-bold mb-4 !text-white">Add New Blog</h2>
           <label className="block mb-2 text-gray-400">Title</label>
           <input
             type="text"

@@ -123,7 +123,7 @@ const TeamManagement = () => {
       {/* Add New Team Form */}
       {isAdding && (
         <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
-          <h2 className="text-xl font-bold mb-4">Add New Team</h2>
+          <h2 className="text-xl font-bold mb-4 !text-white">Add New Team</h2>
           <label className="block mb-2 text-gray-400">Team Name</label>
           <input
             type="text"

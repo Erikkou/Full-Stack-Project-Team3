@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// hier moeten de teams van de db geïmporteerd worden, voor nu dummy data
+// hier moeten de leagues van de db geïmporteerd worden, voor nu dummy data
 const initialLeagues = [
   { id: 1, name: "Premier League", country: "England" },
   { id: 2, name: "La Liga", country: "Spain" },
@@ -123,7 +123,7 @@ const LeagueManagement = () => {
       {/* Add New League Form */}
       {isAdding && (
         <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
-          <h2 className="text-xl font-bold mb-4">Add New League</h2>
+          <h2 className="text-xl font-bold mb-4 !text-white">Add New League</h2>
           <label className="block mb-2 text-gray-400">League Name</label>
           <input
             type="text"
