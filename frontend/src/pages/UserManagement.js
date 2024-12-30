@@ -18,12 +18,7 @@ const UserManagement = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">User Management</h1>
-        <Link
-          to="/admin"
-          className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Back to Dashboard
-        </Link>
+        
       </div>
 
       {/* New User Button */}
