@@ -3,31 +3,43 @@ import { Link } from "react-router-dom";
 
 // Dummy blogs data (to be replaced with data from the database)
 const initialBlogs = [
-  { 
-    id: 1, 
-    title: "The Rise of AI in Football", 
-    author: "John Doe", 
+  {
+    id: 1,
+    title: "The Rise of AI in Football",
+    author: "John Doe",
     date: "2024-12-01",
-    excerpt: "Artificial intelligence is changing the way football teams analyze performance and plan strategies. Learn how AI is transforming the beautiful game."
+    excerpt:
+      "Artificial intelligence is changing the way football teams analyze performance and plan strategies. Learn how AI is transforming the beautiful game.",
   },
-  { 
-    id: 2, 
-    title: "Top 10 Teams of the Decade", 
-    author: "Jane Smith", 
+  {
+    id: 2,
+    title: "Top 10 Teams of the Decade",
+    author: "Jane Smith",
     date: "2024-11-20",
-    excerpt: "From dominating European competitions to setting new records, discover the most successful teams of the past decade."
+    excerpt:
+      "From dominating European competitions to setting new records, discover the most successful teams of the past decade.",
   },
-  { 
-    id: 3, 
-    title: "How to Train Like a Pro", 
-    author: "Chris Johnson", 
+  {
+    id: 3,
+    title: "How to Train Like a Pro",
+    author: "Chris Johnson",
     date: "2024-11-15",
-    excerpt: "Take your training to the next level with tips and techniques used by professional athletes worldwide."
+    excerpt:
+      "Take your training to the next level with tips and techniques used by professional athletes worldwide.",
   },
 ];
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(initialBlogs);
+  const [isAdding, setIsAdding] = useState(false); // Tracks if the add form is open
+  const [newBlog, setNewBlog] = useState({
+    id: null,
+    title: "",
+    author: "",
+    date: new Date().toISOString().split("T")[0], // Default to today's date
+    excerpt: "",
+  });
+
   const [editBlog, setEditBlog] = useState(null); // Stores the blog being edited
   const [isEditing, setIsEditing] = useState(false); // Tracks if the edit form is open
 
@@ -61,6 +73,41 @@ const Blogs = () => {
     setEditBlog(null);
   };
 
+  // Handler for opening the "Add New Blog" form
+  const handleAddNew = () => {
+    setIsAdding(true);
+  };
+
+  // Handler for saving a new blog
+  const handleSaveNewBlog = () => {
+    if (!newBlog.title || !newBlog.author || !newBlog.excerpt) {
+      alert("All fields are required!");
+      return;
+    }
+
+    setBlogs([...blogs, { ...newBlog, id: Date.now() }]);
+    setIsAdding(false);
+    setNewBlog({
+      id: null,
+      title: "",
+      author: "",
+      date: new Date().toISOString().split("T")[0],
+      excerpt: "",
+    });
+  };
+
+  // Handler for canceling the "Add New Blog" form
+  const handleCancelAdd = () => {
+    setIsAdding(false);
+    setNewBlog({
+      id: null,
+      title: "",
+      author: "",
+      date: new Date().toISOString().split("T")[0],
+      excerpt: "",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90">
       {/* Header Section */}
@@ -77,13 +124,16 @@ const Blogs = () => {
       {/* New Blog Button */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold !text-white">Manage Your Blogs</h2>
-        <button className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={handleAddNew}
+          className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+        >
           Add New Blog
         </button>
       </div>
 
       {/* Blog List */}
-      {!isEditing ? (
+      {!isAdding && !isEditing && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog) => (
             <div
@@ -113,8 +163,53 @@ const Blogs = () => {
             </div>
           ))}
         </div>
-      ) : (
-        // Edit Form
+      )}
+
+      {/* Add New Blog Form */}
+      {isAdding && (
+        <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
+          <h2 className="text-xl font-bold mb-4">Add New Blog</h2>
+          <label className="block mb-2 text-gray-400">Title</label>
+          <input
+            type="text"
+            value={newBlog.title}
+            onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+            className="w-full p-2 rounded bg-gray-700 text-white mb-4"
+          />
+          <label className="block mb-2 text-gray-400">Author</label>
+          <input
+            type="text"
+            value={newBlog.author}
+            onChange={(e) => setNewBlog({ ...newBlog, author: e.target.value })}
+            className="w-full p-2 rounded bg-gray-700 text-white mb-4"
+          />
+          <label className="block mb-2 text-gray-400">Excerpt</label>
+          <textarea
+            value={newBlog.excerpt}
+            onChange={(e) =>
+              setNewBlog({ ...newBlog, excerpt: e.target.value })
+            }
+            className="w-full p-2 rounded bg-gray-700 text-white mb-4"
+          ></textarea>
+          <div className="flex justify-between">
+            <button
+              onClick={handleSaveNewBlog}
+              className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleCancelAdd}
+              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Blog Form */}
+      {isEditing && (
         <div className="bg-gray-900 p-6 rounded-lg shadow-md max-w-lg mx-auto">
           <h2 className="text-xl font-bold mb-4">Edit Blog</h2>
           <label className="block mb-2 text-gray-400">Title</label>
