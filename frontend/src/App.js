@@ -14,6 +14,7 @@ import UserManagement from "./pages/UserManagement";
 import UserDashboard from "./components/UserDashboard";
 import MatchScheduling from "./pages/MatchScheduling";
 import ResultsAndStandings from "./pages/ResultsAndStandings";
+import Blogs from "./pages/Blogs";
 import { AuthProvider } from "./AuthContext"; // Voeg de AuthProvider toe
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
               <Route path="/admin/user-management" element={<UserManagement />} />
               <Route path="/admin/match-scheduling" element={<MatchScheduling />} />
               <Route path="/admin/results-and-standings" element={<ResultsAndStandings />} />
+              <Route path="/admin/blogs" element={<Blogs />} />
               <Route path="/dashboard" element={<UserDashboard />} />
             </Routes>
           </BackgroundSection>
