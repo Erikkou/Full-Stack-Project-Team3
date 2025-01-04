@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './styles/App.css';  // Zorg ervoor dat de algemene stijlen geladen worden
+import './styles/App.css';  // algemene stijlen
 
 ReactDOM.render(
   <React.StrictMode>

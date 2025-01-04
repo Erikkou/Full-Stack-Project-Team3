@@ -1,11 +1,13 @@
-// frontend/src/components/Footer.js
-import React from 'react';
-import '../styles/components/Footer.css';  // Zorg ervoor dat het pad correct is
+import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <p>2024 Scori2. All rights reserved.</p>
+    <footer className="bg-gray-900 text-white py-2 fixed bottom-0 left-0 right-0 w-full">
+      <div className="container mx-auto flex justify-center items-center">
+        <div className="text-sm text-center">
+          © {new Date().getFullYear()} Scori2. Alle rechten voorbehouden.
+        </div>
+      </div>
     </footer>
   );
 };
