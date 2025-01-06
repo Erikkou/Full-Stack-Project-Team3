@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
+import TeamManager from './components/TeamComponent/TeamManager';
 import Api from './Api';
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
             }
             setIsLoading(false);
         };
-        validateToken();
+        validateToken().then(r => console.log(r));
     }, []);
 
     const handleLogin = (user) => {
@@ -50,6 +51,15 @@ const App = () => {
         <Router>
             <Navbar isAuthenticated={isAuthenticated} username={username}/>
             <Routes>
+                <Route
+                    path="/teams"
+                    element={
+                        isAuthenticated ? (
+                            <TeamManager/>
+                        ) : (
+                            <Navigate to="/login"/>
+                        )
+                    }/>
                 <Route path="/" element={<Home/>}/>
                 <Route
                     path="/login"

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TeamController extends AbstractController
 {
-    #[Route('/api/team', name: 'team_list', methods: ['GET'])]
+    #[Route('/api/teams', name: 'team_list', methods: ['GET'])]
     public function list(EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();

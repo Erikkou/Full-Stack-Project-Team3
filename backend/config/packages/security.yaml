@@ -32,7 +32,7 @@ security:
   access_control:
     - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/teams, roles: RIS_AUTHENTICATED_FULLY }
+    - { path: ^/api/teams, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/api/players, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/api/admin, roles: ROLE_ADMIN }
     - { path: ^/api/profile, roles: IS_AUTHENTICATED_FULLY }
