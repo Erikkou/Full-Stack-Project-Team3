@@ -45,15 +45,34 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $user = new User();
+        $hashedPassword = $passwordHasher->hashPassword($user, $data['password'] ?? '');
         $user->setUsername($data['username'])
             ->setEmail($data['email'])
-            ->setPassword($passwordHasher, $data['password'] ?? '')
+            ->setPassword($hashedPassword)
             ->setRoles($data['roles']);
 
         $em->persist($user);
         $em->flush();
 
         return new JsonResponse(['status' => 'User created'], Response::HTTP_CREATED);
+    }
+
+
+    #[Route('/api/me', name: 'api_me', methods: ['GET'])]
+    public function getMe(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return new JsonResponse(['message' => 'Not authenticated'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+        ]);
     }
 
 

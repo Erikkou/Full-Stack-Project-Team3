@@ -6,11 +6,15 @@ security:
     app_user_provider:
       entity:
         class: App\Entity\User
-        property: email
+        property: username
 
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
+    register:
+      pattern: ^/api/register
       security: false
 
     api:
@@ -19,15 +23,20 @@ security:
       provider: app_user_provider
       json_login:
         check_path: /api/login
+        username_path: username
+        password_path: password
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
       jwt: ~
 
-
   access_control:
     - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/teams, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/players, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/api/admin, roles: ROLE_ADMIN }
-    - { path: ^/api/profile, roles: ROLE_USER }
+    - { path: ^/api/profile, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/me, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+

@@ -1,26 +1,45 @@
-import React, { createContext, useState } from "react";
+import React, {createContext, useEffect, useState} from "react";
+import Api from "./Api";
 
-// Maak de AuthContext
 export const AuthContext = createContext();
 
-// Provider-component om de context te delen
-export const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({
-    isLoggedIn: false,
-    role: null, // "beheer" of "user"
-  });
+export const AuthProvider = ({children}) => {
+    const [authState, setAuthState] = useState({
+        isLoggedIn: false,
+        role: null,
+        token: null,
+    });
 
-  const login = (role) => {
-    setAuthState({ isLoggedIn: true, role });
-  };
+    const login = (role, token) => {
+        setAuthState({isLoggedIn: true, role, token});
+        localStorage.setItem("token", token);
+    };
 
-  const logout = () => {
-    setAuthState({ isLoggedIn: false, role: null });
-  };
+    const logout = () => {
+        setAuthState({isLoggedIn: false, role: null, token: null});
+        localStorage.removeItem("token");
+    };
 
-  return (
-    <AuthContext.Provider value={{ authState, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            Api.get("/api/me", {headers: {Authorization: `Bearer ${token}`}})
+                .then((response) => {
+                    setAuthState({
+                        isLoggedIn: true,
+                        role: response.data.role,
+                        token,
+                    });
+                })
+                .catch(() => {
+                    logout();
+                });
+        }
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{authState, login, logout}}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

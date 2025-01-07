@@ -4,8 +4,9 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use InvalidArgumentException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -27,14 +28,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $password = null;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-//    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'user')]
-//    private $teams;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Team::class, cascade: ['persist', 'remove'])]
+    private Collection $teams;
 
     public function __construct()
     {
@@ -75,10 +76,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(UserPasswordHasherInterface $passwordHasher, string $plainPassword): static
+    public function setPassword(string $password): self
     {
-        $this->password = $passwordHasher->hashPassword($this, $plainPassword);
+        if (empty(trim($password))) {
+            throw new InvalidArgumentException('Password cannot be empty.');
+        }
 
+        $this->password = $password;
         return $this;
     }
 
@@ -126,9 +130,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->removeElement($team)) {
+            if ($team->getUser() === $this) {
+                $team->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    private ?string $exampleField = null;
+
+    public function getExampleField(): ?string
+    {
+        return $this->exampleField;
+    }
+
+    public function setExampleField(?string $exampleField): self
+    {
+        $this->exampleField = $exampleField;
+        return $this;
+    }
+
     public function eraseCredentials(): void
     {
-        // Implement this method if needed
     }
 
     public function getUserIdentifier(): string

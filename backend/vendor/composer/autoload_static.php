@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
+class ComposerStaticInitac31e9fbf781604f148096b119269cd4
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -64,8 +64,10 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
             'Symfony\\Component\\Clock\\' => 24,
             'Symfony\\Component\\Cache\\' => 24,
             'Symfony\\Bundle\\SecurityBundle\\' => 30,
+            'Symfony\\Bundle\\MonologBundle\\' => 29,
             'Symfony\\Bundle\\MakerBundle\\' => 27,
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
+            'Symfony\\Bridge\\Monolog\\' => 23,
             'Symfony\\Bridge\\Doctrine\\' => 24,
         ),
         'P' => 
@@ -80,6 +82,10 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
         'N' => 
         array (
             'Nelmio\\CorsBundle\\' => 18,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'L' => 
         array (
@@ -272,6 +278,10 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
         array (
             0 => __DIR__ . '/..' . '/symfony/security-bundle',
         ),
+        'Symfony\\Bundle\\MonologBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/monolog-bundle',
+        ),
         'Symfony\\Bundle\\MakerBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/maker-bundle/src',
@@ -279,6 +289,10 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
         'Symfony\\Bundle\\FrameworkBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/framework-bundle',
+        ),
+        'Symfony\\Bridge\\Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/monolog-bridge',
         ),
         'Symfony\\Bridge\\Doctrine\\' => 
         array (
@@ -311,6 +325,10 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
         'Nelmio\\CorsBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/nelmio/cors-bundle',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Lexik\\Bundle\\JWTAuthenticationBundle\\' => 
         array (
@@ -370,8 +388,8 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
         ),
         'Doctrine\\Common\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
-            1 => __DIR__ . '/..' . '/doctrine/common/src',
+            0 => __DIR__ . '/..' . '/doctrine/common/src',
+            1 => __DIR__ . '/..' . '/doctrine/event-manager/src',
         ),
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
@@ -1045,9 +1063,9 @@ class ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit5dd5462f179df22c91ea74d0c9523ca2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitac31e9fbf781604f148096b119269cd4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitac31e9fbf781604f148096b119269cd4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitac31e9fbf781604f148096b119269cd4::$classMap;
 
         }, null, ClassLoader::class);
     }

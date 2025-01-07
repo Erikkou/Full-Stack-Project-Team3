@@ -2,24 +2,24 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
+use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\LazyServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
-class UserRepository extends LazyServiceEntityRepository
+class PlayerRepository extends LazyServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($registry, Player::class);
     }
 
     public function findByExampleField($value): array
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
@@ -28,10 +28,10 @@ class UserRepository extends LazyServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneBySomeField($value): ?User
+    public function findOneBySomeField($value): ?Player
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult();
