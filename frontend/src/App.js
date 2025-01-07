@@ -1,92 +1,48 @@
-import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-import Login from './components/Login';
-import Register from './components/Register';
-import Profile from './components/Profile';
-import TeamManager from './components/TeamComponent/TeamManager';
-import Api from './Api';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import BackgroundSection from "./components/BackgroundSection";
+import MainContent from "./components/MainContent";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignUpPage";
+import AdminLayout from "./pages/AdminLayout";
+import LeagueManagement from "./pages/LeagueManagement";
+import TeamManagement from "./pages/TeamManagement";
+import UserManagement from "./pages/UserManagement";
+import UserDashboard from "./components/UserDashboard";
+import MatchScheduling from "./pages/MatchScheduling";
+import ResultsAndStandings from "./pages/ResultsAndStandings";
+import Blogs from "./pages/Blogs";
+import { AuthProvider } from "./AuthContext"; // Voeg de AuthProvider toe
 
 const App = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [username, setUsername] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const validateToken = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const response = await Api.get('/api/me');
-                    setIsAuthenticated(true);
-                    setUsername(response.data.username);
-                } catch (error) {
-                    console.error('Token is invalid or expired:', error);
-                    localStorage.removeItem('token');
-                    setIsAuthenticated(false);
-                }
-            }
-            setIsLoading(false);
-        };
-        validateToken().then(r => console.log(r));
-    }, []);
-
-    const handleLogin = (user) => {
-        setIsAuthenticated(true);
-        setUsername(user.username);
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
-        setUsername('');
-    };
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <Router>
-            <Navbar isAuthenticated={isAuthenticated} username={username}/>
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <BackgroundSection>
             <Routes>
-                <Route
-                    path="/teams"
-                    element={
-                        isAuthenticated ? (
-                            <TeamManager/>
-                        ) : (
-                            <Navigate to="/login"/>
-                        )
-                    }/>
-                <Route path="/" element={<Home/>}/>
-                <Route
-                    path="/login"
-                    element={
-                        isAuthenticated ? <Navigate to="/profile"/> : <Login onLogin={handleLogin}/>
-                    }
-                />
-                <Route path="/register" element={<Register/>}/>
-                <Route
-                    path="/profile"
-                    element={
-                        isAuthenticated ? (
-                            <Profile username={username}/>
-                        ) : (
-                            <Navigate to="/login"/>
-                        )
-                    }
-                />
-                <Route
-                    path="/logout"
-                    element={
-                        <button onClick={handleLogout}>Logout</button>
-                    }
-                />
+              <Route path="/" element={<MainContent />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/admin" element={<AdminLayout>Admin Content</AdminLayout>} />
+              <Route path="/admin/league-management" element={<LeagueManagement />} />
+              <Route path="/admin/team-management" element={<TeamManagement />} />
+              <Route path="/admin/user-management" element={<UserManagement />} />
+              <Route path="/admin/match-scheduling" element={<MatchScheduling />} />
+              <Route path="/admin/results-and-standings" element={<ResultsAndStandings />} />
+              <Route path="/admin/blogs" element={<Blogs />} />
+              <Route path="/dashboard" element={<UserDashboard />} />
             </Routes>
-        </Router>
-    );
+          </BackgroundSection>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 };
 
 export default App;

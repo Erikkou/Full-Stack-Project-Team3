@@ -1,5 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
+  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); */
 }
 
 .App-logo {
@@ -36,3 +41,13 @@
     transform: rotate(360deg);
   }
 }
+
+/* Reset voor <html> en <body> */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+

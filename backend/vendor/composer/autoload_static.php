@@ -370,8 +370,8 @@ class ComposerStaticInitac31e9fbf781604f148096b119269cd4
         ),
         'Doctrine\\Common\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/common/src',
-            1 => __DIR__ . '/..' . '/doctrine/event-manager/src',
+            0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
+            1 => __DIR__ . '/..' . '/doctrine/common/src',
         ),
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
