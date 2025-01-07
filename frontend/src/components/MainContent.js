@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 const MainContent = () => {
   const navigate = useNavigate();
 
-  // Functies voor navigatie
   const handleSignUpClick = () => {
-    navigate('/signup'); // Navigeren naar de signup pagina
+    navigate('/signup');
   };
 
   const handleLoginClick = () => {
-    navigate('/login'); // Navigeren naar de login pagina
+    navigate('/login');
   };
 
   return (

@@ -10,15 +10,20 @@ Api.interceptors.request.use((config) => {
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
+}, (error) => {
+    return Promise.reject(error);
 });
+
 
 Api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response && error.response.status === 401) {
-            console.error('Unauthorized! Logging out...');
-            localStorage.removeItem('token');
-            window.location.href = '/login';
+        if (error.response) {
+            if (error.response.status === 401) {
+                console.error('Unauthorized! Logging out...');
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }

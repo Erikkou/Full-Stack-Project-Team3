@@ -20,7 +20,8 @@
         "lexik/jwt-authentication-bundle": "^3.1",
         "symfony/flex": "^2.4",
         "lcobucci/jwt": "^5.0",
-        "doctrine/deprecations": "^1.1"
+        "doctrine/deprecations": "^1.1",
+        "symfony/monolog-bundle": "^3.10"
     },
     "autoload": {
         "psr-4": {

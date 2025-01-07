@@ -13,15 +13,16 @@ class Team
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private mixed $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private mixed $teamName;
+    private ?string $teamName = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
-    private mixed $user;
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $players;
 
     public function __construct()
@@ -29,25 +30,11 @@ class Team
         $this->players = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId(): mixed
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId(mixed $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTeamName(): ?string
     {
         return $this->teamName;
@@ -59,36 +46,29 @@ class Team
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser(): mixed
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser(mixed $user): void
+    public function setUser(?User $user): self
     {
         $this->user = $user;
+        return $this;
     }
 
+    /**
+     * @return Collection<int, Player>
+     */
     public function getPlayers(): Collection
     {
         return $this->players;
     }
 
-    public function setPlayers(ArrayCollection $players): void
-    {
-        $this->players = $players;
-    }
-
     public function addPlayer(Player $player): self
     {
         if (!$this->players->contains($player)) {
-            $this->players[] = $player;
+            $this->players->add($player);
             $player->setTeam($this);
         }
 
@@ -97,9 +77,7 @@ class Team
 
     public function removePlayer(Player $player): self
     {
-        if ($this->players->contains($player)) {
-            $this->players->removeElement($player);
-            // Stel de relatie in op null als het element uit de collectie is verwijderd
+        if ($this->players->removeElement($player)) {
             if ($player->getTeam() === $this) {
                 $player->setTeam(null);
             }
@@ -107,6 +85,5 @@ class Team
 
         return $this;
     }
-
 
 }
