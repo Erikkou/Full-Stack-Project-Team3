@@ -3,111 +3,54 @@
 namespace App\Controller;
 
 use App\Entity\Team;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class TeamController extends AbstractController
 {
-    #[Route('/api/teams', name: 'team_list', methods: ['GET'])]
-    public function list(EntityManagerInterface $entityManager): JsonResponse
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $user = $this->getUser();
+    }
 
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }
+    #[Route('/api/teams', name: 'get_teams', methods: ['GET'])]
+    public function getTeams(): JsonResponse
+    {
+        $teams = $this->entityManager->getRepository(Team::class)->findAll();
 
-        $teams = $entityManager->getRepository(Team::class)->findBy(['user' => $user]);
         $data = [];
-
         foreach ($teams as $team) {
             $data[] = [
                 'id' => $team->getId(),
-                'teamName' => $team->getTeamName(),
-// Voeg andere eigenschappen van Team toe indien nodig
+                'name' => $team->getName(),
+                'logo' => $this->generateLogoUrl($team->getId()),
             ];
         }
 
-        return new JsonResponse($data, Response::HTTP_OK);
+        return new JsonResponse($data);
     }
 
-
-    #[Route('/api/teams', name: 'team_new', methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/api/teams/{id}', name: 'get_team', methods: ['GET'])]
+    public function getTeam(int $id): JsonResponse
     {
-        /** @var User $user */
-        $user = $this->getUser();
+        $team = $this->entityManager->getRepository(Team::class)->find($id);
 
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        if (!$team) {
+            return new JsonResponse(['message' => 'Team not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = json_decode($request->getContent(), true);
-
-        if (!isset($data['teamName'])) {
-            return new JsonResponse(['error' => 'Invalid input'], Response::HTTP_BAD_REQUEST);
-        }
-
-        $team = new Team();
-        $team->setTeamName($data['teamName']);
-        $team->setUser($user);
-
-        $entityManager->persist($team);
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Team created successfully', 'teamId' => $team->getId()], Response::HTTP_CREATED);
+        return new JsonResponse([
+            'id' => $team->getId(),
+            'name' => $team->getName(),
+            'logo' => $this->generateLogoUrl($team->getId()),
+        ]);
     }
 
-    #[Route('/api/teams/{id}', name: 'team_edit', methods: ['PUT'])]
-    public function edit(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    private function generateLogoUrl(int $teamId): string
     {
-        $user = $this->getUser();
-
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $team = $entityManager->getRepository(Team::class)->find($id);
-
-        if (!$team || $team->getUser() !== $user) {
-            throw new AccessDeniedException();
-        }
-
-        $data = json_decode($request->getContent(), true);
-
-        if (isset($data['teamName'])) {
-            $team->setTeamName($data['teamName']);
-        }
-
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Team updated successfully'], Response::HTTP_OK);
+        return $this->getParameter('kernel.project_dir') . "/public/teams/{$teamId}.png";
     }
 
-    #[Route('/api/teams/{id}', name: 'team_delete', methods: ['DELETE'])]
-    public function delete(int $id, EntityManagerInterface $entityManager): JsonResponse
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $team = $entityManager->getRepository(Team::class)->find($id);
-
-        if (!$team || $team->getUser() !== $user) {
-            throw new AccessDeniedException();
-        }
-
-        $entityManager->remove($team);
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Team deleted successfully'], Response::HTTP_OK);
-    }
 }

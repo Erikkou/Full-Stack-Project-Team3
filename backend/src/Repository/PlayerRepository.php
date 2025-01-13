@@ -3,17 +3,22 @@
 namespace App\Repository;
 
 use App\Entity\Player;
-use Doctrine\Bundle\DoctrineBundle\Repository\LazyServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class PlayerRepository extends LazyServiceEntityRepository
+/**
+ * @extends ServiceEntityRepository<Player>
+ */
+class PlayerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Player::class);
     }
 
+    /**
+     * @return Player[] Returns an array of Player objects
+     */
     public function findByExampleField($value): array
     {
         return $this->createQueryBuilder('p')
@@ -25,9 +30,6 @@ class PlayerRepository extends LazyServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function findOneBySomeField($value): ?Player
     {
         return $this->createQueryBuilder('p')

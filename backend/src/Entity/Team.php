@@ -2,27 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TeamRepository::class)]
+#[ORM\Entity]
 class Team
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $teamName = null;
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private ?User $user = null;
-
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
 
     public function __construct()
@@ -35,31 +30,17 @@ class Team
         return $this->id;
     }
 
-    public function getTeamName(): ?string
+    public function getName(): ?string
     {
-        return $this->teamName;
+        return $this->name;
     }
 
-    public function setTeamName(string $teamName): self
+    public function setName(string $name): self
     {
-        $this->teamName = $teamName;
+        $this->name = $name;
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Player>
-     */
     public function getPlayers(): Collection
     {
         return $this->players;
@@ -71,7 +52,6 @@ class Team
             $this->players->add($player);
             $player->setTeam($this);
         }
-
         return $this;
     }
 
@@ -82,8 +62,6 @@ class Team
                 $player->setTeam(null);
             }
         }
-
         return $this;
     }
-
 }
