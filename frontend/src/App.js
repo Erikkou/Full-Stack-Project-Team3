@@ -10,6 +10,7 @@ import MainContent from "./components/MainContent";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignUpPage";
 import Profile from "./components/Profile";
+import UserSettings from "./components/UserSettings";
 
 // Pages
 import AdminLayout from "./pages/AdminLayout";
@@ -20,6 +21,7 @@ import MatchScheduling from "./pages/MatchScheduling";
 import ResultsAndStandings from "./pages/ResultsAndStandings";
 import Blogs from "./pages/Blogs";
 import UserDashboard from "./pages/UserDashboard";
+
 
 // Auth Context
 import { AuthProvider } from "./AuthContext";
@@ -49,6 +51,7 @@ const App = () => {
 
                             {/* User Routes */}
                             <Route path="/dashboard" element={<UserDashboard />} />
+                            <Route path="/settings" element={<UserSettings />} />
                         </Routes>
                     </BackgroundSection>
                     <Footer />
