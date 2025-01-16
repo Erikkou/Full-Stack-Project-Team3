@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../image/stadium4.jpg'; // Verwijst naar de afbeelding
+import Image from '../image/stadium4.jpg';
 
 const BackgroundSection = ({ children }) => {
   return (

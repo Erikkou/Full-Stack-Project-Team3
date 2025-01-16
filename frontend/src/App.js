@@ -21,6 +21,7 @@ import MatchScheduling from "./pages/MatchScheduling";
 import ResultsAndStandings from "./pages/ResultsAndStandings";
 import Blogs from "./pages/Blogs";
 import UserDashboard from "./pages/UserDashboard";
+import UserTeamManagement from "./pages/UserTeamManagement";
 
 
 // Auth Context
@@ -52,6 +53,7 @@ const App = () => {
                             {/* User Routes */}
                             <Route path="/dashboard" element={<UserDashboard />} />
                             <Route path="/settings" element={<UserSettings />} />
+                            <Route path="/user-team-management" element={<UserTeamManagement />} />
                         </Routes>
                     </BackgroundSection>
                     <Footer />

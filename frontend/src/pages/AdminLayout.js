@@ -22,10 +22,10 @@ const AdminLayout = () => {
 
           <ul className="flex flex-col space-y-2">
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <a href="/admin/competitions">Competities</a>
+              <a href="/admin/competitions">Competitions</a>
             </li>
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <a href="/admin/settings">Instellingen</a>
+              <a href="/admin/settings">Settings</a>
             </li>
           </ul>
         </nav>
