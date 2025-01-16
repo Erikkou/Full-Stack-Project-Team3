@@ -30,7 +30,6 @@ const UserTeamManagement = () => {
     { id: 6, name: "Player 6", position: "Defender", price: 12, goals: 3 },
     { id: 7, name: "Player 7", position: "Midfielder", price: 15, goals: 7 },
     { id: 8, name: "Player 8", position: "Striker", price: 20, goals: 12 },
-    
   ];
 
   const toggleModal = () => {
@@ -60,8 +59,8 @@ const UserTeamManagement = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 ">
-          <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6 ">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6">
             <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
             <p className="mb-2">
               Players Selected:{" "}
@@ -100,8 +99,8 @@ const UserTeamManagement = () => {
               <div className="w-full md:w-1/2 p-2">
                 <h3 className="text-lg font-bold mb-2">Available Players</h3>
                 <div
-                  className="overflow-y-auto h-64 bg-gray-700 p-4 rounded-lg shadow-md"
-                  style={{ maxHeight: "300px" }}
+                  className="overflow-y-auto h-auto bg-gray-700 p-4 rounded-lg shadow-md"
+                  style={{ maxHeight: "360px" }}
                 >
                   <div className="grid grid-cols-1 gap-4">
                     {allPlayers.map((player) => (
@@ -126,7 +125,10 @@ const UserTeamManagement = () => {
             </div>
 
             {/* Onderste sectie: My Squad */}
-            <div className="w-full p-4 bg-gray-700 rounded shadow-md">
+            <div
+              className="w-full p-4 bg-gray-700 rounded shadow-md"
+              style={{ maxHeight: "100px", overflowY: "auto" }} // Max hoogte en scroll
+            >
               <h3 className="text-lg font-bold mb-2">My Squad</h3>
               {playersSelected.length > 0 ? (
                 playersSelected.map((player) => (
