@@ -56,13 +56,13 @@ const UserDashboard = () => {
             {/* Cards */}
             <div className="bg-blue-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-blue-400 transition transform hover:-translate-y-2">
               <Link to="/user/upcoming-matches">
-                <h2 className="text-xl font-semibold mb-4 !text-white">Upcoming Matches</h2>
+                <h2 className="text-xl font-semibold mb-4 !text-white">Leagues</h2>
               </Link>
             </div>
 
             <div className="bg-red-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-red-600 transition transform hover:-translate-y-2">
-              <Link to="/user/match-history">
-                <h2 className="text-xl font-semibold mb-4 !text-white">Match History</h2>
+              <Link to="/user-team-management">
+                <h2 className="text-xl font-semibold mb-4 !text-white">Teams</h2>
               </Link>
             </div>
 

@@ -5,6 +5,8 @@ const UserTeamManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [playersSelected, setPlayersSelected] = useState([]);
   const [budget, setBudget] = useState(100);
+  const [savedTeams, setSavedTeams] = useState([]); // Opslag voor teams
+  const [teamName, setTeamName] = useState(""); // Teamnaam state
 
   // Dummy data voor rollen en spelers
   const roles = [
@@ -46,6 +48,25 @@ const UserTeamManagement = () => {
     }
   };
 
+  const handleSaveTeam = () => {
+    if (!teamName.trim()) {
+      alert("Please enter a team name before saving.");
+      return;
+    }
+
+    const newTeam = {
+      name: teamName,
+      players: playersSelected,
+      remainingBudget: budget,
+    };
+
+    setSavedTeams([...savedTeams, newTeam]); // Voeg het nieuwe team toe aan opgeslagen teams
+    setTeamName(""); // Reset de teamnaam
+    setPlayersSelected([]); // Reset geselecteerde spelers
+    setBudget(100); // Reset budget
+    setIsModalOpen(false); // Sluit de modal
+  };
+
   return (
     <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90">
       {/* Header */}
@@ -57,11 +78,32 @@ const UserTeamManagement = () => {
         Create or Edit Team
       </button>
 
+      {/* Saved Teams Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {savedTeams.map((team, index) => (
+          <div
+            key={index}
+            className="bg-gray-700 p-4 rounded shadow-md border border-gray-500"
+          >
+            <h3 className="text-lg font-bold mb-2">{team.name}</h3>
+            <p className="text-yellow-400 mb-2">Remaining Budget: ${team.remainingBudget}</p>
+            <h4 className="text-sm font-bold mb-2">Players:</h4>
+            <ul className="text-gray-300 text-sm">
+              {team.players.map((player, idx) => (
+                <li key={idx}>
+                  - {player.name} ({player.position})
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6">
-            <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
+            <h2 className="text-xl font-bold mb-4">Squad Selection</h2>
             <p className="mb-2">
               Players Selected:{" "}
               <span className="text-green-400">{playersSelected.length}/15</span>
@@ -127,7 +169,7 @@ const UserTeamManagement = () => {
             {/* Onderste sectie: My Squad */}
             <div
               className="w-full p-4 bg-gray-700 rounded shadow-md"
-              style={{ maxHeight: "100px", overflowY: "auto" }} // Max hoogte en scroll
+              style={{ maxHeight: "100px", overflowY: "auto" }}
             >
               <h3 className="text-lg font-bold mb-2">My Squad</h3>
               {playersSelected.length > 0 ? (
@@ -150,6 +192,20 @@ const UserTeamManagement = () => {
               )}
             </div>
 
+            {/* Team Name Input */}
+            <div className="mt-4">
+              <label htmlFor="team-name" className="block font-bold mb-2">
+                Team Name:
+              </label>
+              <input
+                type="text"
+                id="team-name"
+                className="w-full p-2 rounded bg-gray-600 text-white"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+              />
+            </div>
+
             {/* Acties */}
             <div className="flex justify-end mt-6 space-x-4">
               <button
@@ -159,7 +215,7 @@ const UserTeamManagement = () => {
                 Cancel
               </button>
               <button
-                onClick={() => alert("Team saved successfully!")}
+                onClick={handleSaveTeam}
                 className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
               >
                 Save Team
