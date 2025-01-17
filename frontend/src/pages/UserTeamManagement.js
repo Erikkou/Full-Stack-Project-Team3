@@ -67,6 +67,20 @@ const UserTeamManagement = () => {
     setIsModalOpen(false); // Sluit de modal
   };
 
+  const handleDeleteTeam = (index) => {
+    const updatedTeams = savedTeams.filter((_, i) => i !== index);
+    setSavedTeams(updatedTeams);
+  };
+
+  const handleModifyTeam = (index) => {
+    const teamToEdit = savedTeams[index];
+    setPlayersSelected(teamToEdit.players);
+    setBudget(teamToEdit.remainingBudget);
+    setTeamName(teamToEdit.name);
+    setIsModalOpen(true);
+    handleDeleteTeam(index);
+  };
+
   return (
     <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90">
       {/* Header */}
@@ -75,7 +89,7 @@ const UserTeamManagement = () => {
         onClick={toggleModal}
         className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-6"
       >
-        Create or Edit Team
+        Create Team
       </button>
 
       {/* Saved Teams Cards */}
@@ -95,6 +109,22 @@ const UserTeamManagement = () => {
                 </li>
               ))}
             </ul>
+
+            {/* Edit en Delete knoppen */}
+            <div className="flex justify-end space-x-2 mt-4">
+              <button
+                className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded"
+                onClick={() => handleModifyTeam(index)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-3 rounded"
+                onClick={() => handleDeleteTeam(index)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -112,9 +142,7 @@ const UserTeamManagement = () => {
               Budget: <span className="text-yellow-400">${budget}</span>
             </p>
 
-            {/* Layout: Voetbalveld links en scrollbare spelers rechts */}
             <div className="flex flex-wrap md:flex-nowrap mb-6">
-              {/* Linker sectie: Voetbalveld */}
               <div className="w-full md:w-1/2 p-2">
                 <h3 className="text-lg font-bold mb-2">Football Field</h3>
                 <div className="relative bg-gray-700 rounded-lg p-2">
@@ -137,7 +165,6 @@ const UserTeamManagement = () => {
                 </div>
               </div>
 
-              {/* Rechter sectie: Beschikbare spelers */}
               <div className="w-full md:w-1/2 p-2">
                 <h3 className="text-lg font-bold mb-2">Available Players</h3>
                 <div
@@ -166,7 +193,6 @@ const UserTeamManagement = () => {
               </div>
             </div>
 
-            {/* Onderste sectie: My Squad */}
             <div
               className="w-full p-4 bg-gray-700 rounded shadow-md"
               style={{ maxHeight: "100px", overflowY: "auto" }}
@@ -192,7 +218,6 @@ const UserTeamManagement = () => {
               )}
             </div>
 
-            {/* Team Name Input */}
             <div className="mt-4">
               <label htmlFor="team-name" className="block font-bold mb-2">
                 Team Name:
@@ -206,7 +231,6 @@ const UserTeamManagement = () => {
               />
             </div>
 
-            {/* Acties */}
             <div className="flex justify-end mt-6 space-x-4">
               <button
                 onClick={toggleModal}
