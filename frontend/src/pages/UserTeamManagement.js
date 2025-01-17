@@ -40,7 +40,7 @@ const UserTeamManagement = () => {
     ],
   };
 
-  // List of all available players
+  // List of all available players  <--------------------------------------------------------------------get from db
   const allPlayers = [
     { id: 1, name: "Player 1", position: "Goalkeeper", price: 10, goals: 5 },
     { id: 2, name: "Player 2", position: "Defender", price: 12, goals: 3 },
