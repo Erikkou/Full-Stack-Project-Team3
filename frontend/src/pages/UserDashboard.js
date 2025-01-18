@@ -55,7 +55,7 @@ const UserDashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Cards */}
             <div className="bg-blue-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-blue-400 transition transform hover:-translate-y-2">
-              <Link to="/user/upcoming-matches">
+              <Link to="/user-league-management">
                 <h2 className="text-xl font-semibold mb-4 !text-white">Leagues</h2>
               </Link>
             </div>
