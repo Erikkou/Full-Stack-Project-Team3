@@ -107,6 +107,7 @@ const AdminLayout = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
+                <Legend />
               </LineChart>
             </ResponsiveContainer>
           </div>

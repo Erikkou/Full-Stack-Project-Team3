@@ -39,7 +39,7 @@ const UserDashboard = () => {
               <Link to="/user/profile">My Profile</Link>
             </li>
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <Link to="/user/matches">My Matches</Link>
+              <Link to="/user/stats">My Stats</Link>
             </li>
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
               <Link to="/settings">Settings</Link>
@@ -67,8 +67,8 @@ const UserDashboard = () => {
             </div>
 
             <div className="bg-green-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-green-400 transition transform hover:-translate-y-2">
-              <Link to="/user/stats">
-                <h2 className="text-xl font-semibold mb-4 !text-white">My Stats</h2>
+              <Link to="/user/predict-results">
+                <h2 className="text-xl font-semibold mb-4 !text-white">Predict Results</h2>
               </Link>
             </div>
           </div>
@@ -90,6 +90,7 @@ const UserDashboard = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
+                <Legend />
               </LineChart>
             </ResponsiveContainer>
           </div>
