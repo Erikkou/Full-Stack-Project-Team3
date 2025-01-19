@@ -72,7 +72,7 @@ const UserLeagueManagement = () => {
       {/* Content for "Create & Join new Leagues" tab */}
       {activeTab === "create" && (
         <div className="p-6 bg-gray-700 rounded shadow-md">
-          <h2 className="text-xl font-bold mb-4">Create & Join new Leagues</h2>
+          <h2 className="text-xl font-bold mb-4 !text-red-500">Create & Join new Leagues</h2>
           <div>
             {/* Public Classic Leagues Section */}
             <div className="mb-4">
@@ -158,7 +158,7 @@ const UserLeagueManagement = () => {
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-gray-700 p-6 rounded shadow-lg w-96">
-            <h2 className="text-xl font-bold text-yellow-400 mb-4">
+            <h2 className="text-xl font-bold !text-yellow-400 mb-4">
               Create a {leagueType}
             </h2>
             {/* Input for entering the new league name */}

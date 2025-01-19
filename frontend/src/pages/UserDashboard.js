@@ -2,7 +2,7 @@ import React from "react";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 // Import the image
-import avatarImage from '../image/avatar.png';
+// import avatarImage from '../image/avatar.png';
 import { Link } from "react-router-dom";
 
 // Dummy data for user-specific charts
@@ -31,7 +31,7 @@ const UserDashboard = () => {
         <nav className="mt-4">
           {/* Avatar Section */}
           <div className="flex items-center justify-center mb-6 mt-10 mb-2rem">
-            <img src={avatarImage} alt="User Avatar" className="w-20 h-20 rounded-full object-cover" />
+            <img src="https://robohash.org/johndoe" alt="User Avatar" className="w-20 h-20 rounded-full object-cover" />
           </div>
 
           <ul className="flex flex-col space-y-2">

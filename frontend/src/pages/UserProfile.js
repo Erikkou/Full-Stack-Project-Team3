@@ -5,7 +5,7 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({
     name: "User Name",
     email: "user@example.com",
-    avatar: "https://via.placeholder.com/150",
+    avatar: "https://robohash.org/johndoe",
     totalPoints: 0,
     leaguesJoined: 0,
   });
