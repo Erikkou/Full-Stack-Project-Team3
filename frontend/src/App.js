@@ -25,6 +25,7 @@ import UserTeamManagement from "./pages/UserTeamManagement";
 import UserLeagueManagement from "./pages/UserLeagueManagement";
 import PredictResult from "./pages/PredictResult";
 import UserStats from "./pages/UserStats";
+import UserProfile from "./pages/UserProfile";
 
 
 // Auth Context
@@ -60,6 +61,7 @@ const App = () => {
                             <Route path="/user-league-management" element={<UserLeagueManagement />} />
                             <Route path="/predict-result" element={<PredictResult />} />
                             <Route path="/user/stats" element={<UserStats />} />
+                            <Route path="/user-profile" element={<UserProfile />} />
                         </Routes>
                     </BackgroundSection>
                     <Footer />

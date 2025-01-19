@@ -36,7 +36,7 @@ const UserDashboard = () => {
 
           <ul className="flex flex-col space-y-2">
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <Link to="/user/profile">My Profile</Link>
+              <Link to="/user-profile">My Profile</Link>
             </li>
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
               <Link to="/user/stats">My Stats</Link>
