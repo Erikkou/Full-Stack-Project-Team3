@@ -20,7 +20,7 @@ const MainContent = () => {
       {/* Content */}
       <div className="relative z-10 space-y-8">
         <h1 className="text-5xl font-extrabold text-yellow-400">
-          Welkom bij <span className="text-white">Scori2</span>
+        Welkom bij <span className="text-white">Scori2  ⚽️</span>
         </h1>
         <p className="text-xl font-semibold text-gray-300">
           Ontdek de ultieme voetbalervaring! Stel je droomteam samen, strijd in spannende leagues en voorspel de
