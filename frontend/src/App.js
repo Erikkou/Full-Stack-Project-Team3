@@ -23,6 +23,7 @@ import Blogs from "./pages/Blogs";
 import UserDashboard from "./pages/UserDashboard";
 import UserTeamManagement from "./pages/UserTeamManagement";
 import UserLeagueManagement from "./pages/UserLeagueManagement";
+import PredictResult from "./pages/PredictResult";
 
 
 // Auth Context
@@ -56,6 +57,7 @@ const App = () => {
                             <Route path="/settings" element={<UserSettings />} />
                             <Route path="/user-team-management" element={<UserTeamManagement />} />
                             <Route path="/user-league-management" element={<UserLeagueManagement />} />
+                            <Route path="/predict-result" element={<PredictResult />} />
                         </Routes>
                     </BackgroundSection>
                     <Footer />
