@@ -41,12 +41,10 @@ const MainContent = () => {
             Log in
           </button>
         </div>
+        
       </div>
 
-      {/* Footer Text */}
-      <div className="absolute bottom-4 text-sm text-gray-400">
-        ⚽️ Powered by passie voor voetbal. Sluit je aan bij duizenden anderen!
-      </div>
+      
     </div>
   );
 };
