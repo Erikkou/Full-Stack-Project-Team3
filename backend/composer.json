@@ -20,7 +20,8 @@
         "lexik/jwt-authentication-bundle": "^3.1",
         "symfony/flex": "^2.4",
         "lcobucci/jwt": "^5.0",
-        "symfony/http-client": "^6.3"
+        "symfony/http-client": "^6.3",
+        "symfony/monolog-bundle": "^3.10"
     },
     "autoload": {
         "psr-4": {
@@ -34,7 +35,7 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.50",
+        "symfony/maker-bundle": "^1.50",    
         "phpunit/phpunit": "^9.5"
     }
 }
