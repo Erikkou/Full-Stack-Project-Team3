@@ -24,17 +24,17 @@ class PlayerController extends AbstractController
     ) {
     }
 
-    #[Route('/api/players/team/{team}', name: 'get_players_per_team', methods: ['GET'])]
-    public function getPlayers(string $team): JsonResponse
+    #[Route('/api/players', name: 'get_players', methods: ['GET'])]
+    public function getPlayers(): JsonResponse
     {
         // Haal het team op door de naam te matchen met het 'name' veld in je database
-        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
-        if (!$teamEntity) {
-            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
-        }
+//        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
+//        if (!$teamEntity) {
+//            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
+//        }
 
         // Haal de spelers op die aan dit team gekoppeld zijn
-        $players = $this->entityManager->getRepository(Player::class)->findBy(['team' => $teamEntity]);
+        $players = $this->entityManager->getRepository(Player::class)->findAll();
 
         $data = [];
         foreach ($players as $player) {
@@ -44,8 +44,9 @@ class PlayerController extends AbstractController
                 'display_name' => $player->getDisplayName(),
                 'team' => $player->getTeam()->getName(),
                 'jersey_number' => $player->getJerseyNumber(),
-                'position_id' => $player->getPositionId(),
+                'position' => $player->getPositionId(),
                 'detailed_position_id' => $player->getDetailedPositionId(),
+                'price' => '1232$',
             ];
         }
 
