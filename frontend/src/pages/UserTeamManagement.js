@@ -5,7 +5,7 @@ const UserTeamManagement = () => {
   // State variables for managing the team creation process
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const [playersSelected, setPlayersSelected] = useState([]); // Players selected for the team
-  const [budget, setBudget] = useState(100); // Team budget
+  const [budget, setBudget] = useState(300); // Team budget
   const [savedTeams, setSavedTeams] = useState([]); // List of saved teams
   const [teamName, setTeamName] = useState(""); // Team name input state
   const [currentFormation, setCurrentFormation] = useState("4-3-3"); // Current formation selection
@@ -72,6 +72,11 @@ const UserTeamManagement = () => {
   const handleSaveTeam = () => {
     if (!teamName.trim()) {
       alert("Please enter a team name before saving.");
+      return;
+    }
+
+    if (playersSelected.length !== 15) {
+      alert("Your squad must contain exactly 15 players."); // Alert if not exactly 15 players
       return;
     }
 
