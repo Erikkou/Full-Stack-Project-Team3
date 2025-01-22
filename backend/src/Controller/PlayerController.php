@@ -4,90 +4,117 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Entity\Team;
+use App\Utils\ApiClient;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class PlayerController extends AbstractController
 {
-    #[Route('/api/players', name: 'player_list', methods: ['GET'])]
-    public function list(EntityManagerInterface $entityManager): JsonResponse
-    {
-        $user = $this->getUser();
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ApiClient $client,
+    ) {
+    }
 
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+    #[Route('/api/players', name: 'get_players', methods: ['GET'])]
+    public function getPlayers(): JsonResponse
+    {
+        // Haal het team op door de naam te matchen met het 'name' veld in je database
+//        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
+//        if (!$teamEntity) {
+//            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
+//        }
+
+        // Haal de spelers op die aan dit team gekoppeld zijn
+        $players = $this->entityManager->getRepository(Player::class)->findAll();
+
+        $data = [];
+        foreach ($players as $player) {
+            $data[] = [
+                'id' => $player->getId(),
+                'name' => $player->getName(),
+                'display_name' => $player->getDisplayName(),
+                'team' => $player->getTeam()->getName(),
+                'jersey_number' => $player->getJerseyNumber(),
+                'position' => $player->getPositionId(),
+                'detailed_position_id' => $player->getDetailedPositionId(),
+                'price' => '1232$',
+            ];
         }
 
-        $teams = $entityManager->getRepository(Team::class)->findBy(['user' => $user]);
-        $teamIds = array_map(fn($team) => $team->getId(), $teams);
+        return new JsonResponse($data);
+    }
 
-        $players = $entityManager->getRepository(Player::class)->findBy(['team' => $teamIds]);
+    #[Route('/api/players/{id}', name: 'get_player', methods: ['GET'])]
+    public function getPlayer(int $id): JsonResponse
+    {
+        $player = $this->entityManager->getRepository(Player::class)->find($id);
 
-        $data = array_map(fn($player) => [
+        if (!$player) {
+            return new JsonResponse(['message' => 'Player not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse([
             'id' => $player->getId(),
-            'playerName' => $player->getPlayerName(),
-            'team' => [
-                'id' => $player->getTeam()->getId(),
-                'name' => $player->getTeam()->getTeamName(),
-            ],
-        ], $players);
-
-        return new JsonResponse($data, Response::HTTP_OK);
+            'name' => $player->getName(),
+            'display_name' => $player->getDisplayName(),
+            'team' => $player->getTeam()->getName(),
+            'jersey_number' => $player->getJerseyNumber(),
+            'position_id' => $player->getPositionId(),
+            'detailed_position_id' => $player->getDetailedPositionId(),
+        ]);
     }
 
-    #[Route('/api/players', name: 'player_new', methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    #[Route('/api/players/save/{team}', name: 'save_players')]
+    public function savePlayers(string $team, EntityManagerInterface $em)
     {
-        $user = $this->getUser();
+        $teamEntity = $em->getRepository(Team::class)->find($team);
 
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        if (!$teamEntity) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true);
+        $response = $this->client->request('teams/' . $team, ['include' => 'players.player']);
 
-        if (!isset($data['playerName'], $data['teamId'])) {
-            return new JsonResponse(['error' => 'Player name and team are required.'], Response::HTTP_BAD_REQUEST);
+        foreach ($response['data']['players'] as $players) {
+            $playerId = $players['player']['id'];
+            $existingMatch = $em->getRepository(Player::class)->find($playerId);
+            if ($existingMatch) {
+                return new JsonResponse(
+                    ['status' => 'Exists', 'message' => sprintf('%s Players are already set', $teamEntity->getName()),],
+                );
+            }
+
+            $player = new Player();
+            $player->setId($playerId)
+                ->setName($players['player']['name'])
+                ->setDisplayName($players['player']['display_name'])
+                ->setTeam($teamEntity)
+                ->setJerseyNumber($players['jersey_number'])
+                ->setDetailedPositionId($players['player']['detailed_position_id'])
+                ->setPositionId($players['player']['position_id']);
+            $em->persist($player);
         }
 
-        $team = $entityManager->getRepository(Team::class)->find($data['teamId']);
+        $em->flush();
 
-        if (!$team || $team->getUser() !== $user) {
-            return new JsonResponse(['error' => 'Team not found or access denied.'], Response::HTTP_FORBIDDEN);
-        }
-
-        $player = new Player();
-        $player->setPlayerName($data['playerName']);
-        $player->setTeam($team);
-
-        $entityManager->persist($player);
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Player successfully created.', 'playerId' => $player->getId()], Response::HTTP_CREATED);
-    }
-
-    #[Route('/api/players/{id}', name: 'player_delete', methods: ['DELETE'])]
-    public function delete(int $id, EntityManagerInterface $entityManager): JsonResponse
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $player = $entityManager->getRepository(Player::class)->find($id);
-
-        if (!$player || $player->getTeam()->getUser() !== $user) {
-            return new JsonResponse(['error' => 'Player not found or access denied.'], Response::HTTP_FORBIDDEN);
-        }
-
-        $entityManager->remove($player);
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Player successfully deleted.'], Response::HTTP_OK);
+        return new JsonResponse(
+            ['status' => 'success', 'message' => $teamEntity->getName() . ' players have been saved']
+        );
     }
 }
