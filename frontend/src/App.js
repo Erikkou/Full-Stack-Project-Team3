@@ -19,7 +19,8 @@ import TeamManagement from "./pages/TeamManagement";
 import UserManagement from "./pages/UserManagement";
 import MatchScheduling from "./pages/MatchScheduling";
 import ResultsAndStandings from "./pages/ResultsAndStandings";
-import Blogs from "./pages/Blogs";
+import AdminBlogs from "./pages/AdminBlogs";
+import BlogPage from "./pages/BlogPage";
 import UserDashboard from "./pages/UserDashboard";
 import UserTeamManagement from "./pages/UserTeamManagement";
 import UserLeagueManagement from "./pages/UserLeagueManagement";
@@ -44,6 +45,7 @@ const App = () => {
                             <Route path="/login" element={<LoginPage />} />
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/profile" element={<Profile />} />
+                            <Route path="/blogs" element={<BlogPage />} />
 
                             {/* Admin Routes */}
                             <Route path="/admin" element={<AdminLayout />} />
@@ -52,7 +54,7 @@ const App = () => {
                             <Route path="/admin/user-management" element={<UserManagement />} />
                             <Route path="/admin/match-scheduling" element={<MatchScheduling />} />
                             <Route path="/admin/results-and-standings" element={<ResultsAndStandings />} />
-                            <Route path="/admin/blogs" element={<Blogs />} />
+                            <Route path="/admin/AdminBlogs" element={<AdminBlogs />} />
 
                             {/* User Routes */}
                             <Route path="/dashboard" element={<UserDashboard />} />

@@ -81,7 +81,7 @@ const AdminLayout = () => {
 
 
             <div className="bg-yellow-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-yellow-400 transition transform hover:-translate-y-2">
-            <Link to="/admin/blogs">
+            <Link to="/admin/AdminBlogs">
             <h2 className="text-xl font-semibold mb-4 !text-white">
               Blogs
             </h2>
