@@ -20,6 +20,10 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -62,6 +66,17 @@ class Team
                 $player->setTeam(null);
             }
         }
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 }

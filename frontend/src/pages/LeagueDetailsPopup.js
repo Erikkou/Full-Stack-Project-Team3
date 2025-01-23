@@ -1,81 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-const LeagueDetailsPopup = ({ league, onClose }) => {
-  const [players, setPlayers] = useState([]); // State for player data
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const navigate = useNavigate();
+const LeagueDetailsPopup = () => {
+  const [players, setPlayers] = useState([]);
+  const [error, setError] = useState(null);
 
-  // API URL ophalen vanuit de .env variabelen
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-
-  useEffect(() => {
-    // API call om de spelerslijst op te halen
-    const fetchPlayers = async () => {
-      setIsLoading(true);
-      try {
-        // Fetch spelers van de API
-        const response = await fetch(`${backendUrl}/api/players`); 
-        if (!response.ok) {
-          throw new Error(`Error fetching data: ${response.statusText}`);
-        }
-        const data = await response.json();
-        setPlayers(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching players:", error);
-        setError("Failed to load players.");
-        setIsLoading(false);
+  // Fetch players data
+  const fetchPlayers = async () => {
+    try {
+      // Retrieve token from localStorage
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('No token found');
       }
-    };
 
-    if (league && league.id) {
-      fetchPlayers();
+      // Make the API request with the token
+      const response = await axios.get('http://localhost:9000/api/players', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Use the token from localStorage
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Players fetched:', response.data);
+        setPlayers(response.data); // Set players in state
+      } else {
+        throw new Error('Unexpected response status: ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching players:', error.message);
+      setError('Failed to fetch players.');
     }
-  }, [league, backendUrl]);
+  };
+
+  // Fetch players when the component mounts
+  useEffect(() => {
+    fetchPlayers();
+  }, []);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-gray-700 p-6 rounded shadow-lg w-96 relative">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-white text-xl hover:text-gray-400"
-        >
-          &times;
-        </button>
-
-        {/* League title */}
-        <h2 className="text-xl font-bold !text-yellow-400 mb-4">{league.name} - Players</h2>
-
-        {/* Loading spinner or error message */}
-        {isLoading ? (
-          <p className="text-gray-400">Loading players...</p>
-        ) : error ? (
-          <p className="text-red-400">{error}</p>
-        ) : (
-          <ul className="space-y-2">
-            {/* Show list of players */}
-            {players.map((player) => (
-              <li key={player.id} className="flex justify-between items-center">
-                <span>{player.name}</span>
-                <span className="font-bold text-yellow-400">{player.points} pts</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {/* Button to redirect to UserTeamManagement */}
-        <div className="mt-6">
-          <button
-            onClick={() => navigate("/user-team-management")}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 w-full"
-          >
-            Manage Your Team
-          </button>
-        </div>
-      </div>
+    <div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {players.length > 0 ? (
+        <ul>
+          {players.map((player) => (
+            <li key={player.id}>
+              {player.name} - Team ID: {player.team_id}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No players available.</p>
+      )}
     </div>
   );
 };
