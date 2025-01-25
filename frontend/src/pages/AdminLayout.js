@@ -22,10 +22,10 @@ const AdminLayout = () => {
 
           <ul className="flex flex-col space-y-2">
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <a href="/admin/competitions">Competities</a>
+              <a href="/admin/competitions">Competitions</a>
             </li>
             <li className="px-4 py-2 hover:bg-gray-700 rounded">
-              <a href="/admin/settings">Instellingen</a>
+              <a href="/admin/settings">Settings</a>
             </li>
           </ul>
         </nav>
@@ -81,7 +81,7 @@ const AdminLayout = () => {
 
 
             <div className="bg-yellow-600 p-6 rounded-lg shadow-md flex flex-col items-center justify-center opacity-90 hover:bg-yellow-400 transition transform hover:-translate-y-2">
-            <Link to="/admin/blogs">
+            <Link to="/admin/AdminBlogs">
             <h2 className="text-xl font-semibold mb-4 !text-white">
               Blogs
             </h2>
@@ -107,6 +107,7 @@ const AdminLayout = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
+                <Legend />
               </LineChart>
             </ResponsiveContainer>
           </div>

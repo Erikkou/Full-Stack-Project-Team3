@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const Navbar = () => {
-  const { authState } = useContext(AuthContext);
+  const { authState, logout } = useContext(AuthContext); // logout function toegevoegd
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -19,9 +19,24 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
+          {/* Always visible links */}
           <Link to="/" className="hover:text-blue-400 transition duration-200">
             Home
           </Link>
+          <Link
+            to="/blogs"
+            className="hover:text-blue-400 transition duration-200"
+          >
+            Blogs
+          </Link>
+          <Link
+            to="/spelkalendar"
+            className="hover:text-blue-400 transition duration-200"
+          >
+            Spelkalendar
+          </Link>
+
+          {/* Links based on user roles */}
           {authState.isLoggedIn && authState.role === "beheer" && (
             <Link
               to="/admin"
@@ -37,6 +52,16 @@ const Navbar = () => {
             >
               Mijn Dashboard
             </Link>
+          )}
+
+          {/* Logout link if user is logged in */}
+          {authState.isLoggedIn && (
+            <button
+              onClick={logout}
+              className="hover:text-blue-400 transition duration-200 focus:outline-none"
+            >
+              Logout
+            </button>
           )}
         </div>
 
@@ -67,6 +92,7 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-700 p-4">
+          {/* Always visible links */}
           <Link
             to="/"
             className="block py-2 px-4 hover:bg-gray-600 rounded"
@@ -74,6 +100,22 @@ const Navbar = () => {
           >
             Home
           </Link>
+          <Link
+            to="/blogs"
+            className="block py-2 px-4 hover:bg-gray-600 rounded"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Blogs
+          </Link>
+          <Link
+            to="/spelkalendar"
+            className="block py-2 px-4 hover:bg-gray-600 rounded"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Spelkalendar
+          </Link>
+
+          {/* Links based on user roles */}
           {authState.isLoggedIn && authState.role === "beheer" && (
             <Link
               to="/admin"
@@ -91,6 +133,19 @@ const Navbar = () => {
             >
               Mijn Dashboard
             </Link>
+          )}
+
+          {/* Logout link if user is logged in */}
+          {authState.isLoggedIn && (
+            <button
+              onClick={() => {
+                logout();
+                setIsMenuOpen(false); // Close the menu after logout
+              }}
+              className="block py-2 px-4 hover:bg-gray-600 rounded text-left w-full"
+            >
+              Logout
+            </button>
           )}
         </div>
       )}
