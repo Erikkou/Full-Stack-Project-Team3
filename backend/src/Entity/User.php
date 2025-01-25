@@ -6,16 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,8 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
-
-    #[ORM\Column(length: 255, nullable: false)]
+    #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     #[ORM\Column(type: 'json')]
@@ -37,9 +35,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Team::class, cascade: ['persist', 'remove'])]
     private Collection $teams;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Player::class, cascade: ['persist', 'remove'])]
+    private Collection $players;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,7 +57,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
-
         return $this;
     }
 
@@ -67,7 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -76,59 +76,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
-        if (empty(trim($password))) {
-            throw new InvalidArgumentException('Password cannot be empty.');
-        }
-
         $this->password = $password;
         return $this;
     }
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
-
-        // Voeg altijd de standaardrol toe
-        if (!in_array(self::ROLE_USER, $roles)) {
-            $roles[] = self::ROLE_USER;
-        }
-
-        return array_unique($roles);
+        return array_unique(array_merge($this->roles, [self::ROLE_USER]));
     }
-
-    private static array $validRoles = [
-        self::ROLE_USER,
-        self::ROLE_ADMIN,
-    ];
 
     public function setRoles(array $roles): static
     {
-        foreach ($roles as $role) {
-            if (!in_array($role, self::$validRoles)) {
-                throw new \InvalidArgumentException(sprintf('Invalid role "%s"', $role));
-            }
-        }
-
         $this->roles = $roles;
-
         return $this;
     }
-
-    public function addRole(string $role): static
-    {
-        if (!in_array($role, self::$validRoles)) {
-            throw new \InvalidArgumentException(sprintf('Invalid role "%s"', $role));
-        }
-
-        if (!in_array($role, $this->roles)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
-
 
     /**
      * @return Collection<int, Team>
@@ -138,42 +101,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->teams;
     }
 
-    public function addTeam(Team $team): self
+    public function addTeam(Team $team): static
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
             $team->setUser($this);
         }
-
         return $this;
     }
 
-    public function removeTeam(Team $team): self
+    public function removeTeam(Team $team): static
     {
         if ($this->teams->removeElement($team)) {
             if ($team->getUser() === $this) {
                 $team->setUser(null);
             }
         }
-
         return $this;
     }
 
-    private ?string $exampleField = null;
-
-    public function getExampleField(): ?string
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
     {
-        return $this->exampleField;
+        return $this->players;
     }
 
-    public function setExampleField(?string $exampleField): self
+    public function addPlayer(Player $player): static
     {
-        $this->exampleField = $exampleField;
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removePlayer(Player $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            if ($player->getUser() === $this) {
+                $player->setUser(null);
+            }
+        }
         return $this;
     }
 
     public function eraseCredentials(): void
     {
+        // TODO: Implement eraseCredentials() method.
     }
 
     public function getUserIdentifier(): string
