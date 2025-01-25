@@ -27,10 +27,13 @@ import UserLeagueManagement from "./pages/UserLeagueManagement";
 import PredictResult from "./pages/PredictResult";
 import UserStats from "./pages/UserStats";
 import UserProfile from "./pages/UserProfile";
+import GamesOverview from "./pages/GamesOverview";
+import GameDetails from "./pages/GameDetails";
 
 
 // Auth Context
 import { AuthProvider } from "./AuthContext";
+import TeamDetailsPopup from "./pages/TeamDetailsPopup";
 
 const App = () => {
     return (
@@ -46,6 +49,8 @@ const App = () => {
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/blogs" element={<BlogPage />} />
+                            <Route path="/games-overview" element={<GamesOverview />} />
+                            <Route path="/game-details/:gameId" element={<GameDetails />} />
 
                             {/* Admin Routes */}
                             <Route path="/admin" element={<AdminLayout />} />
@@ -59,7 +64,7 @@ const App = () => {
                             {/* User Routes */}
                             <Route path="/dashboard" element={<UserDashboard />} />
                             <Route path="/settings" element={<UserSettings />} />
-                            <Route path="/user-team-management" element={<UserTeamManagement />} />
+                            <Route path="/user-team-management/:gameId" element={<UserTeamManagement />} />
                             <Route path="/user-league-management" element={<UserLeagueManagement />} />
                             <Route path="/predict-result" element={<PredictResult />} />
                             <Route path="/user/stats" element={<UserStats />} />

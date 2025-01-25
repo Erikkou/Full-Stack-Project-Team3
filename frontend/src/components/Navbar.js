@@ -14,7 +14,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <img src="/logo.png" alt="Logo" className="h-10 w-10 mr-2" />
-          <span className="text-2xl font-bold">Scori2</span>
+          <span className="text-2xl font-bold">SIT-Game</span>
         </div>
 
         {/* Desktop Navigation */}
@@ -30,10 +30,10 @@ const Navbar = () => {
             Blogs
           </Link>
           <Link
-            to="/spelkalendar"
+            to="/games-overview"
             className="hover:text-blue-400 transition duration-200"
           >
-            Spelkalendar
+            Spelkalender
           </Link>
 
           {/* Links based on user roles */}
@@ -108,11 +108,11 @@ const Navbar = () => {
             Blogs
           </Link>
           <Link
-            to="/spelkalendar"
+            to="/games-overview"
             className="block py-2 px-4 hover:bg-gray-600 rounded"
             onClick={() => setIsMenuOpen(false)}
           >
-            Spelkalendar
+            Spelkalender
           </Link>
 
           {/* Links based on user roles */}

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import footballFieldImage from "../image/Football_Field.jpg";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserTeamManagement = () => {
   // State variables for managing the team creation process
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const { gameId } = useParams();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(true); // Modal visibility state
   const [playersSelected, setPlayersSelected] = useState([]); // Players selected for the team
   const [budget, setBudget] = useState(300); // Team budget
   const [savedTeams, setSavedTeams] = useState([]); // List of saved teams
@@ -51,11 +54,6 @@ const UserTeamManagement = () => {
     { id: 7, name: "Player 7", position: "Midfielder", price: 15, goals: 7 },
     { id: 8, name: "Player 8", position: "Striker", price: 20, goals: 12 },
   ];
-
-  // Toggle modal visibility
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
 
   // Handle player selection (add or remove from the selected team)
   const handlePlayerSelect = (player) => {
@@ -111,14 +109,8 @@ const UserTeamManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90">
+    <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90 mt-10">
       <h1 className="text-2xl font-bold mb-6">Manage Your Team</h1>
-      <button
-        onClick={toggleModal} // Trigger modal to create a new team
-        className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-6"
-      >
-        Create Team
-      </button>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {/* Render saved teams */}
@@ -156,7 +148,7 @@ const UserTeamManagement = () => {
 
       {/* Modal for creating or editing teams */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 mt-10">
           <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6">
             <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
             <p className="mb-2">
@@ -239,7 +231,7 @@ const UserTeamManagement = () => {
               className="w-full p-4 bg-gray-700 rounded shadow-md"
               style={{ maxHeight: "100px", overflowY: "auto" }} 
             >
-              <h3 className="text-lg font-bold mb-2">My Squad</h3>
+              <h3 className="text-lg font-bold mb-2">Teamsamenstelling</h3>
               {playersSelected.length > 0 ? (
                 playersSelected.map((player) => (
                   <div
@@ -277,7 +269,7 @@ const UserTeamManagement = () => {
             {/* Action buttons */}
             <div className="flex justify-end mt-6 space-x-4">
               <button
-                onClick={toggleModal} // Cancel and close modal
+                onClick={() => navigate(`/game-details/${gameId}`)}
                 className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
               >
                 Cancel

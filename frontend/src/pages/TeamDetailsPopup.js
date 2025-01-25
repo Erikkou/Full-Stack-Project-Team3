@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LeagueDetailsPopup = ({ league, onClose }) => {
+const TeamDetailsPopup = ({ league }) => {
   const [players, setPlayers] = useState([]); // State for player data
   const [isLoading, setIsLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -16,7 +16,7 @@ const LeagueDetailsPopup = ({ league, onClose }) => {
       setIsLoading(true);
       try {
         // Fetch spelers van de API
-        const response = await fetch(`${backendUrl}/api/players`); 
+        const response = await fetch(`${backendUrl}/api/players`);
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.statusText}`);
         }
@@ -36,48 +36,38 @@ const LeagueDetailsPopup = ({ league, onClose }) => {
   }, [league, backendUrl]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-gray-700 p-6 rounded shadow-lg w-96 relative">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-white text-xl hover:text-gray-400"
-        >
-          &times;
-        </button>
-
+      <div className="flex-1 bg-gray-700 p-6 rounded-lg">
         {/* League title */}
         <h2 className="text-xl font-bold !text-yellow-400 mb-4">{league.name} - Players</h2>
 
         {/* Loading spinner or error message */}
         {isLoading ? (
-          <p className="text-gray-400">Loading players...</p>
+            <p className="text-gray-400">Loading players...</p>
         ) : error ? (
-          <p className="text-red-400">{error}</p>
+            <p className="text-red-400">{error}</p>
         ) : (
-          <ul className="space-y-2">
-            {/* Show list of players */}
-            {players.map((player) => (
-              <li key={player.id} className="flex justify-between items-center">
-                <span>{player.name}</span>
-                <span className="font-bold text-yellow-400">{player.points} pts</span>
-              </li>
-            ))}
-          </ul>
+            <ul className="space-y-2">
+              {/* Show list of players */}
+              {players.map((player) => (
+                  <li key={player.id} className="flex justify-between items-center">
+                    <span>{player.name}</span>
+                    <span className="font-bold text-yellow-400">{player.points} pts</span>
+                  </li>
+              ))}
+            </ul>
         )}
 
         {/* Button to redirect to UserTeamManagement */}
         <div className="mt-6">
           <button
-            onClick={() => navigate("/user-team-management")}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 w-full"
+              onClick={() => navigate(`/user-team-management/${league.id}`)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 w-full"
           >
             Manage Your Team
           </button>
         </div>
       </div>
-    </div>
   );
 };
 
-export default LeagueDetailsPopup;
+export default TeamDetailsPopup;

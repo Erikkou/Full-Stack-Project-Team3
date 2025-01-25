@@ -3,33 +3,33 @@
     font-family: Arial, sans-serif;
     text-align: center;
   }
-  
+
   h1 {
     color: #333;
   }
-  
+
   nav ul {
     list-style-type: none;
     padding: 0;
   }
-  
+
   nav ul li {
     display: inline;
     margin: 0 15px;
   }
-  
+
   footer {
     margin-top: 20px;
     padding: 20px;
     background-color: #333;
     color: white;
   }
-  
+
   @media (max-width: 600px) {
     .header nav ul {
       display: block;
     }
-  
+
     .header nav ul li {
       display: block;
       margin: 5px 0;
@@ -40,9 +40,131 @@
     color: #444;
     margin-top: 1rem;
   }
-  
+
   .App p {
     color: white;
     line-height: 1.5;
   }
-  
+
+/* Target the GameDetails page */
+#game-details-container {
+  padding: 2rem;
+  margin-top: 5rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header Section */
+#game-header {
+  background-color: #2a2a2a; /* Darker grey for the header */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Inline Elements Container */
+#inline-elements {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+
+/* Heading styles within team details */
+#team-details-container h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fbbf24; /* Yellow color for the heading */
+}
+
+/* Add spacing between items */
+#team-details-container ul {
+  margin-top: 1rem;
+}
+
+#team-details-container li {
+  margin-bottom: 0.75rem;
+}
+
+/* Modify button styles */
+button {
+  padding: 0.75rem 1.5rem;
+  background-color: #3b82f6; /* Blue background */
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2563eb; /* Darker blue for hover */
+}
+
+/* General Tab Button Style */
+.tab-button {
+  padding: 0.5rem 1rem; /* Reduced padding to make tabs more compact */
+  background-color: #4a4a4a;
+  color: white;
+  border: 2px solid transparent; /* Subtle border */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-grow: 1; /* Allow tabs to expand on mobile */
+  margin-bottom: 0.5rem; /* Reduced space between tabs */
+}
+
+/* Active Tab Button Style */
+.tab-button.active {
+  background-color: #fbbf24; /* Yellow for active tab */
+  color: black;
+  border-color: #fbbf24; /* Border color same as the active background */
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.5); /* Soft glow effect on active tab */
+}
+
+/* Hover Effect for Tabs */
+.tab-button:hover {
+  background-color: #6b6b6b; /* Slightly lighter gray on hover */
+  transform: translateY(-2px); /* Subtle movement on hover */
+}
+
+/* Tab Container on Mobile */
+.tabs-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center; /* Center tabs on mobile */
+  margin-bottom: 1rem; /* Reduced bottom margin */
+  flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+}
+
+/* Stack the tabs vertically on mobile */
+@media (max-width: 768px) {
+  .tabs-container {
+    flex-direction: column; /* Stack tabs vertically */
+    gap: 0.5rem; /* Reduced gap between tabs */
+    padding: 0.5rem;
+  }
+
+  .tab-button {
+    width: 100%; /* Make tabs take up full width */
+    margin-bottom: 0.5rem; /* Adjust space between the buttons */
+  }
+}
+
+/* Tab Content Area */
+.tab-content {
+  margin-top: 1rem;
+  padding: 0.5rem; /* Add padding to ensure content looks good */
+}
+
+/* Additional styles for content containers */
+#game-details,
+#match-details,
+#leaderboard-container,
+#team-details-container {
+  background-color: #333333;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
