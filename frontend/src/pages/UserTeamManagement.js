@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import footballFieldImage from "../image/Football_Field.jpg";
 import { useParams, useNavigate } from "react-router-dom";
+import Api from "../Api";
 
 const UserTeamManagement = () => {
   // State variables for managing the team creation process
@@ -109,183 +110,177 @@ const UserTeamManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90 mt-10">
-      <h1 className="text-2xl font-bold mb-6">Manage Your Team</h1>
+      <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90 mt-10 overflow-y-auto">
+        <h1 className="text-2xl font-bold mb-6">Manage Your Team</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {/* Render saved teams */}
-        {savedTeams.map((team, index) => (
-          <div
-            key={index}
-            className="bg-gray-700 p-4 rounded shadow-md border border-gray-500"
-          >
-            <h3 className="text-lg font-bold mb-2">{team.name}</h3>
-            <p className="text-yellow-400 mb-2">Remaining Budget: ${team.remainingBudget}</p>
-            <ul className="text-gray-300 text-sm">
-              {team.players.map((player, idx) => (
-                <li key={idx}>
-                  - {player.name} ({player.position})
-                </li>
-              ))}
-            </ul>
-            <div className="flex justify-end space-x-2 mt-4">
-              <button
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded"
-                onClick={() => handleModifyTeam(index)} // Edit team
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          {/* Render saved teams */}
+          {savedTeams.map((team, index) => (
+              <div
+                  key={index}
+                  className="bg-gray-700 p-4 rounded shadow-md border border-gray-500"
               >
-                Edit
-              </button>
-              <button
-                className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-3 rounded"
-                onClick={() => handleDeleteTeam(index)} // Delete team
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Modal for creating or editing teams */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 mt-10">
-          <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6">
-            <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
-            <p className="mb-2">
-              Players Selected:{" "}
-              <span className="text-green-400">{playersSelected.length}/15</span>
-            </p>
-            <p className="mb-6">
-              Budget: <span className="text-yellow-400">${budget}</span>
-            </p>
-
-            <div className="flex flex-wrap md:flex-nowrap mb-6">
-              <div className="w-full md:w-1/2 p-2">
-                <h3 className="text-lg font-bold mb-2">Football Field</h3>
-                <div className="relative bg-gray-700 rounded-lg p-2">
-                  {/* Displaying the football field with player roles */}
-                  <img
-                    src={footballFieldImage}
-                    alt="Football Field"
-                    className="w-full h-auto rounded-lg shadow-md"
-                    style={{ maxHeight: "300px", objectFit: "contain" }}
-                  />
-                  <div className="absolute inset-0">
-                    {formations[currentFormation].map((role) => (
-                      <div
-                        key={role.id}
-                        className="absolute bg-blue-700 bg-opacity-75 rounded-full text-xs font-bold text-white flex items-center justify-center shadow-md"
-                        style={{
-                          top: role.top,
-                          left: role.left,
-                          transform: "translate(-50%, -50%)",
-                          width: "40px",
-                          height: "40px",
-                        }}
-                      >
-                        {role.role}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {/* Dropdown to select formation */}
-                <select
-                  value={currentFormation}
-                  onChange={(e) => setCurrentFormation(e.target.value)}
-                  className="p-2 rounded bg-gray-600 text-white mb-4"
-                >
-                  <option value="4-3-3">4-3-3</option>
-                  <option value="4-4-2">4-4-2</option>
-                </select>
-              </div>
-
-              {/* Available Players */}
-              <div className="w-full md:w-1/2 p-2">
-                <h3 className="text-lg font-bold mb-2">Available Players</h3>
-                <div
-                  className="overflow-y-auto h-auto bg-gray-700 p-4 rounded-lg shadow-md"
-                  style={{ maxHeight: "315px" }}
-                >
-                  {allPlayers.map((player) => (
-                    <div
-                      key={player.id}
-                      className={`p-4 border rounded shadow-md cursor-pointer ${
-                        playersSelected.includes(player)
-                          ? "bg-green-600"
-                          : "bg-gray-600 hover:bg-gray-500"
-                      }`}
-                      onClick={() => handlePlayerSelect(player)} // Select player
-                    >
-                      <p className="font-bold">{player.name}</p>
-                      <p>Position: {player.position}</p>
-                      <p>Price: ${player.price}</p>
-                      <p>Goals: {player.goals}</p>
-                    </div>
+                <h3 className="text-lg font-bold mb-2">{team.name}</h3>
+                <p className="text-yellow-400 mb-2">Remaining Budget: ${team.remainingBudget}</p>
+                <ul className="text-gray-300 text-sm">
+                  {team.players.map((player, idx) => (
+                      <li key={idx}>
+                        - {player.name} ({player.position})
+                      </li>
                   ))}
+                </ul>
+                <div className="flex justify-end space-x-2 mt-4">
+                  <button
+                      className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded"
+                      onClick={() => handleModifyTeam(index)} // Edit team
+                  >
+                    Edit
+                  </button>
+                  <button
+                      className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-3 rounded"
+                      onClick={() => handleDeleteTeam(index)} // Delete team
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+          ))}
+        </div>
+
+        {/* Modal for creating or editing teams */}
+        {isModalOpen && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 mt-10">
+              <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6 overflow-y-auto max-h-full">
+                <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
+                <p className="mb-2">
+                  Players Selected:{" "}
+                  <span className="text-green-400">{playersSelected.length}/15</span>
+                </p>
+                <p className="mb-6">
+                  Budget: <span className="text-yellow-400">${budget}</span>
+                </p>
+
+                <div className="flex flex-wrap md:flex-nowrap mb-6">
+                  <div className="w-full md:w-1/2 p-2">
+                    <h3 className="text-lg font-bold mb-2">Football Field</h3>
+                    <div className="relative bg-gray-700 rounded-lg p-2">
+                      <img
+                          src={footballFieldImage}
+                          alt="Football Field"
+                          className="w-full h-auto rounded-lg shadow-md"
+                          style={{ maxHeight: "300px", objectFit: "contain" }}
+                      />
+                      <div className="absolute inset-0">
+                        {formations[currentFormation].map((role) => (
+                            <div
+                                key={role.id}
+                                className="absolute bg-blue-700 bg-opacity-75 rounded-full text-xs font-bold text-white flex items-center justify-center shadow-md"
+                                style={{
+                                  top: role.top,
+                                  left: role.left,
+                                  transform: "translate(-50%, -50%)",
+                                  width: "40px",
+                                  height: "40px",
+                                }}
+                            >
+                              {role.role}
+                            </div>
+                        ))}
+                      </div>
+                    </div>
+                    <select
+                        value={currentFormation}
+                        onChange={(e) => setCurrentFormation(e.target.value)}
+                        className="p-2 rounded bg-gray-600 text-white mb-4"
+                    >
+                      <option value="4-3-3">4-3-3</option>
+                      <option value="4-4-2">4-4-2</option>
+                    </select>
+                  </div>
+
+                  <div className="w-full md:w-1/2 p-2">
+                    <h3 className="text-lg font-bold mb-2">Available Players</h3>
+                    <div
+                        className="overflow-y-auto h-auto bg-gray-700 p-4 rounded-lg shadow-md"
+                        style={{ maxHeight: "315px" }}
+                    >
+                      {allPlayers.map((player) => (
+                          <div
+                              key={player.id}
+                              className={`p-4 border rounded shadow-md cursor-pointer ${
+                                  playersSelected.includes(player)
+                                      ? "bg-green-600"
+                                      : "bg-gray-600 hover:bg-gray-500"
+                              }`}
+                              onClick={() => handlePlayerSelect(player)} // Select player
+                          >
+                            <p className="font-bold">{player.name}</p>
+                            <p>Position: {player.position}</p>
+                            <p>Price: ${player.price}</p>
+                            <p>Goals: {player.goals}</p>
+                          </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                    className="w-full p-4 bg-gray-700 rounded shadow-md"
+                    style={{ maxHeight: "100px", overflowY: "auto" }}
+                >
+                  <h3 className="text-lg font-bold mb-2">Teamsamenstelling</h3>
+                  {playersSelected.length > 0 ? (
+                      playersSelected.map((player) => (
+                          <div
+                              key={player.id}
+                              className="flex justify-between items-center border-b border-gray-500 py-2"
+                          >
+                            <p>{player.name}</p>
+                            <button
+                                onClick={() => handlePlayerSelect(player)} // Remove player from squad
+                                className="text-red-500 font-bold"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                      ))
+                  ) : (
+                      <p className="text-gray-400">No players selected yet.</p>
+                  )}
+                </div>
+
+                <div className="mt-4">
+                  <label htmlFor="team-name" className="block font-bold mb-2">
+                    Team Name:
+                  </label>
+                  <input
+                      type="text"
+                      id="team-name"
+                      className="w-full p-2 rounded bg-gray-600 text-white"
+                      value={teamName}
+                      onChange={(e) => setTeamName(e.target.value)} // Update team name
+                  />
+                </div>
+
+                <div className="flex justify-end mt-6 space-x-4">
+                  <button
+                      onClick={() => navigate(`/game-details/${gameId}`)}
+                      className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                      onClick={handleSaveTeam} // Save team and close modal
+                      className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Save Team
+                  </button>
                 </div>
               </div>
             </div>
-
-            {/* Display selected players */}
-            <div
-              className="w-full p-4 bg-gray-700 rounded shadow-md"
-              style={{ maxHeight: "100px", overflowY: "auto" }} 
-            >
-              <h3 className="text-lg font-bold mb-2">Teamsamenstelling</h3>
-              {playersSelected.length > 0 ? (
-                playersSelected.map((player) => (
-                  <div
-                    key={player.id}
-                    className="flex justify-between items-center border-b border-gray-500 py-2"
-                  >
-                    <p>{player.name}</p>
-                    <button
-                      onClick={() => handlePlayerSelect(player)} // Remove player from squad
-                      className="text-red-500 font-bold"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400">No players selected yet.</p>
-              )}
-            </div>
-
-            {/* Team name input */}
-            <div className="mt-4">
-              <label htmlFor="team-name" className="block font-bold mb-2">
-                Team Name:
-              </label>
-              <input
-                type="text"
-                id="team-name"
-                className="w-full p-2 rounded bg-gray-600 text-white"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)} // Update team name
-              />
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex justify-end mt-6 space-x-4">
-              <button
-                onClick={() => navigate(`/game-details/${gameId}`)}
-                className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveTeam} // Save team and close modal
-                className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
-              >
-                Save Team
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
   );
-};
+}
 
 export default UserTeamManagement;

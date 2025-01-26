@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 const UserProfile = () => {
   // **State to store user profile data**
   const [userData, setUserData] = useState({
-    name: "User Name",
-    email: "user@example.com",
+    name: "erik",
+    email: "erik@example.com",
     avatar: "https://robohash.org/johndoe",
-    totalPoints: 0,
-    leaguesJoined: 0,
+
+
   });
 
   // Effect to fetch user profile from API/DB
@@ -19,11 +19,11 @@ const UserProfile = () => {
       try {
         // Simulated fetch
         const response = {
-          name: "John Doe",
-          email: "john.doe@example.com",
+          name: "erik",
+          email: "erik@example.com",
           avatar: "https://robohash.org/johndoe",    // User avatar image URL
-          totalPoints: 1200,
-          leaguesJoined: 5,
+
+
         };
         setUserData(response); // Set the fetched user data
       } catch (error) {
@@ -61,22 +61,20 @@ const UserProfile = () => {
         <div className="grid grid-cols-2 gap-6">
           {/* Total Points */}
           <div className="p-4 bg-gray-600 rounded text-center">
-            <h3 className="text-xl font-bold text-yellow-400">Total Points</h3>
-            <p className="text-3xl font-bold">{userData.totalPoints}</p>
+
           </div>
 
           {/* Leagues Joined */}
           <div className="p-4 bg-gray-600 rounded text-center">
-            <h3 className="text-xl font-bold text-yellow-400">Leagues Joined</h3>
-            <p className="text-3xl font-bold">{userData.leaguesJoined}</p>
+
           </div>
         </div>
 
         {/* Return to the dashboard Button */}
         <div className="mt-6 text-center">
-          <a href="/dashboard">
+          <a href="/">
             <button className="px-6 py-2 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400">
-                Return to Dashboard
+                Home
             </button>
           </a>
           

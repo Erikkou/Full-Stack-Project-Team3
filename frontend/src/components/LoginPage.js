@@ -14,7 +14,7 @@ const LoginPage = () => {
             const response = await Api.post("/api/login", {username: username, password});
             const {token, role} = response.data;
             login(role, token);
-            navigate("/profile");
+            navigate("/");
         } catch (error) {
             setMessage(error.response?.data?.message || "Invalid login credentials.");
         }

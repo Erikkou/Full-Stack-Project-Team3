@@ -32,6 +32,12 @@ Je zou drie containers moeten zien: symfony_app, react_app, en mariadb.
 - Symfony backend: http://localhost:9000
 - React frontend: http://localhost:3000
 
+### 5 Database setup
+
+- docker exec -it symfony_app bash
+- php bin/console doctrine:schema:update --force
+
+### 6 Voeg data toe aan de database
 
 ### Belangrijke commando's
 

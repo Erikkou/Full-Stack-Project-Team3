@@ -31,7 +31,7 @@ const TeamDetailsPopup = ({ league }) => {
     };
 
     if (league && league.id) {
-      fetchPlayers();
+      //fetchPlayers();
     }
   }, [league, backendUrl]);
 

@@ -29,6 +29,7 @@ import UserStats from "./pages/UserStats";
 import UserProfile from "./pages/UserProfile";
 import GamesOverview from "./pages/GamesOverview";
 import GameDetails from "./pages/GameDetails";
+import PlayerList from "./components/PlayerComponent/PlayerList";
 
 
 // Auth Context
@@ -51,6 +52,7 @@ const App = () => {
                             <Route path="/blogs" element={<BlogPage />} />
                             <Route path="/games-overview" element={<GamesOverview />} />
                             <Route path="/game-details/:gameId" element={<GameDetails />} />
+                            <Route path="/player-list" element={<PlayerList />} />
 
                             {/* Admin Routes */}
                             <Route path="/admin" element={<AdminLayout />} />
