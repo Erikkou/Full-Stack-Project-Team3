@@ -32,7 +32,7 @@ class Player
     private ?int $detailed_position_id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'players')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?User $user = null;
 
     public function getId(): ?int
@@ -73,7 +73,7 @@ class Player
         return $this->team;
     }
 
-    public function setTeam(?Team $team): static
+    public function setTeam(?Team $team): self
     {
         $this->team = $team;
         return $this;

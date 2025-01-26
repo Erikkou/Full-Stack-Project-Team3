@@ -1,27 +1,24 @@
-// LeaderboardDetailsPopup.js
 import React, { useState, useEffect } from "react";
+import Api from "../Api";
+import {useParams} from "react-router-dom";
 
 const LeaderboardDetailsPopup = () => {
-    const [players, setPlayers] = useState([]); // State for player data
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [players, setPlayers] = useState([]);
+    const { teamId } = useParams();
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch leaderboard data (placeholder for now)
         const fetchLeaderboardData = async () => {
             setIsLoading(true);
+            setError(null);
             try {
-                // For now, simulate data fetch
-                const dummyLeaderboard = [
-                    { name: "Player 1", points: 120 },
-                    { name: "Player 2", points: 115 },
-                    { name: "Player 3", points: 110 },
-                ];
-                setPlayers(dummyLeaderboard);
-                setIsLoading(false);
+                const response = await Api.get(`api/players/team/${teamId}`);
+                setPlayers(response.data);
             } catch (error) {
                 console.error("Error fetching leaderboard data:", error);
                 setError("Failed to load leaderboard.");
+            } finally {
                 setIsLoading(false);
             }
         };
@@ -32,18 +29,16 @@ const LeaderboardDetailsPopup = () => {
     return (
         <div className="flex-1 bg-gray-700 p-6 rounded-lg">
             <h2 className="text-xl font-bold !text-yellow-400 mb-4">Leaderboard</h2>
-            {/* Loading spinner or error message */}
             {isLoading ? (
                 <p className="text-gray-400">Loading leaderboard...</p>
             ) : error ? (
                 <p className="text-red-400">{error}</p>
             ) : (
                 <ul className="space-y-4">
-                    {/* Show list of players */}
-                    {players.map((player, index) => (
-                        <li key={index} className="flex justify-between">
+                    {players.map((player) => (
+                        <li key={player.id} className="flex justify-between">
                             <span>{player.name}</span>
-                            <span className="font-bold text-yellow-400">{player.points} pts</span>
+                            <span className="text-gray-400">{player.team}</span>
                         </li>
                     ))}
                 </ul>

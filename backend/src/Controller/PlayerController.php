@@ -20,21 +20,21 @@ class PlayerController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ApiClient $client,
-    ) {
+        private readonly ApiClient              $client,
+    )
+
+    {
     }
 
-    #[Route('/api/players', name: 'get_players', methods: ['GET'])]
-    public function getPlayers(): JsonResponse
+    #[Route('/api/players/team/{team}', name: 'get_players_per_team', methods: ['GET'])]
+    public function getPlayers(string $team): JsonResponse
     {
-        // Haal het team op door de naam te matchen met het 'name' veld in je database
-//        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
-//        if (!$teamEntity) {
-//            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
-//        }
+        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
+        if (!$teamEntity) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
+        }
 
-        // Haal de spelers op die aan dit team gekoppeld zijn
-        $players = $this->entityManager->getRepository(Player::class)->findAll();
+        $players = $this->entityManager->getRepository(Player::class)->findBy(['team' => $teamEntity]);
 
         $data = [];
         foreach ($players as $player) {
@@ -44,9 +44,8 @@ class PlayerController extends AbstractController
                 'display_name' => $player->getDisplayName(),
                 'team' => $player->getTeam()->getName(),
                 'jersey_number' => $player->getJerseyNumber(),
-                'position' => $player->getPositionId(),
+                'position_id' => $player->getPositionId(),
                 'detailed_position_id' => $player->getDetailedPositionId(),
-                'price' => '1232$',
             ];
         }
 
@@ -73,6 +72,26 @@ class PlayerController extends AbstractController
         ]);
     }
 
+    #[Route('/api/players', name: 'get_all_players', methods: ['GET'])]
+    public function getAllePlayers(): JsonResponse
+    {
+        $players = $this->entityManager->getRepository(Player::class)->findAll();
+
+        $data = array_map(function (Player $player) {
+            return [
+                'id' => $player->getId(),
+                'name' => $player->getName(),
+                'display_name' => $player->getDisplayName(),
+                'team' => $player->getTeam() ? $player->getTeam()->getName() : null,
+                'jersey_number' => $player->getJerseyNumber(),
+                'position_id' => $player->getPositionId(),
+                'detailed_position_id' => $player->getDetailedPositionId(),
+            ];
+        }, $players);
+
+        return new JsonResponse($data);
+    }
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
@@ -81,7 +100,7 @@ class PlayerController extends AbstractController
      * @throws ClientExceptionInterface
      */
     #[Route('/api/players/save/{team}', name: 'save_players')]
-    public function savePlayers(string $team, EntityManagerInterface $em)
+    public function savePlayers(string $team, EntityManagerInterface $em): JsonResponse
     {
         $teamEntity = $em->getRepository(Team::class)->find($team);
 

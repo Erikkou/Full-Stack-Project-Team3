@@ -32,15 +32,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Team::class, cascade: ['persist', 'remove'])]
-    private Collection $teams;
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Team::class, cascade: ['persist', 'remove'])]
+    private ?Team $team = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
 
     public function __construct()
     {
-        $this->teams = new ArrayCollection();
         $this->players = new ArrayCollection();
     }
 
@@ -93,30 +92,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Team>
-     */
-    public function getTeams(): Collection
+    public function getTeam(): ?Team
     {
-        return $this->teams;
+        return $this->team;
     }
 
-    public function addTeam(Team $team): static
+    public function setTeam(?Team $team): static
     {
-        if (!$this->teams->contains($team)) {
-            $this->teams->add($team);
-            $team->setUser($this);
-        }
-        return $this;
-    }
+        if ($this->team !== $team) {
+            if ($this->team !== null) {
+                $this->team->setUser(null);
+            }
 
-    public function removeTeam(Team $team): static
-    {
-        if ($this->teams->removeElement($team)) {
-            if ($team->getUser() === $this) {
-                $team->setUser(null);
+            $this->team = $team;
+
+            if ($team !== null && $team->getUser() !== $this) {
+                $team->setUser($this);
             }
         }
+
         return $this;
     }
 

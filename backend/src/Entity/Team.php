@@ -19,8 +19,8 @@ class Team
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\OneToOne(inversedBy: 'team', targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?User $user = null;
 
     public function __construct()
