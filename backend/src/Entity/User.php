@@ -32,18 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Team::class, cascade: ['persist', 'remove'])]
-    private Collection $teams;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Player::class, cascade: ['persist', 'remove'])]
-    private Collection $players;
-
-    public function __construct()
-    {
-        $this->teams = new ArrayCollection();
-        $this->players = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -92,61 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
         return $this;
     }
-
-    /**
-     * @return Collection<int, Team>
-     */
-    public function getTeams(): Collection
-    {
-        return $this->teams;
-    }
-
-    public function addTeam(Team $team): static
-    {
-        if (!$this->teams->contains($team)) {
-            $this->teams->add($team);
-            $team->setUser($this);
-        }
-        return $this;
-    }
-
-    public function removeTeam(Team $team): static
-    {
-        if ($this->teams->removeElement($team)) {
-            if ($team->getUser() === $this) {
-                $team->setUser(null);
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Player>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(Player $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-            $player->setUser($this);
-        }
-        return $this;
-    }
-
-    public function removePlayer(Player $player): static
-    {
-        if ($this->players->removeElement($player)) {
-            if ($player->getUser() === $this) {
-                $player->setUser(null);
-            }
-        }
-        return $this;
-    }
-
     public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
