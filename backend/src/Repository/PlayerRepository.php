@@ -17,25 +17,50 @@ class PlayerRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Player[] Returns an array of Player objects
+     * Vind spelers op basis van een team-ID.
+     *
+     * @param int $teamId
+     * @return Player[]
      */
-    public function findByExampleField($value): array
+    public function findPlayersByTeam(int $teamId): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.team = :teamId')
+            ->setParameter('teamId', $teamId)
+            ->orderBy('p.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function findOneBySomeField($value): ?Player
+    /**
+     * Vind een speler op basis van de naam (case-insensitive).
+     *
+     * @param string $name
+     * @return Player|null
+     */
+    public function findPlayerByName(string $name): ?Player
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('LOWER(p.name) = :name')
+            ->setParameter('name', strtolower($name))
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Vind spelers met caching (optioneel).
+     *
+     * @param int $teamId
+     * @return Player[]
+     */
+    public function findPlayersByTeamWithCache(int $teamId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.team = :teamId')
+            ->setParameter('teamId', $teamId)
+            ->orderBy('p.name', 'ASC')
+            ->getQuery()
+            ->useResultCache(true, 3600, 'players_by_team_' . $teamId)
+            ->getResult();
     }
 }

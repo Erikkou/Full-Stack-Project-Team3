@@ -31,6 +31,10 @@ class Player
     #[ORM\Column(nullable: true)]
     private ?int $detailed_position_id = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'players')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,7 +43,6 @@ class Player
     public function setId(int $id): static
     {
         $this->id = $id;
-
         return $this;
     }
 
@@ -70,7 +73,7 @@ class Player
         return $this->team;
     }
 
-    public function setTeam(?Team $team): self
+    public function setTeam(?Team $team): static
     {
         $this->team = $team;
         return $this;
@@ -109,4 +112,14 @@ class Player
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+        return $this;
+    }
 }
