@@ -46,7 +46,7 @@ class PlayerController extends AbstractController
                 'jersey_number' => $player->getJerseyNumber(),
                 'position' => $player->getPositionId(),
                 'detailed_position_id' => $player->getDetailedPositionId(),
-                'price' => '1232$',
+                'price' => $player->getPrice(),
             ];
         }
 
@@ -70,6 +70,7 @@ class PlayerController extends AbstractController
             'jersey_number' => $player->getJerseyNumber(),
             'position_id' => $player->getPositionId(),
             'detailed_position_id' => $player->getDetailedPositionId(),
+            'price' => $player->getPrice(),
         ]);
     }
 
