@@ -100,7 +100,7 @@ class Player
         return $this;
     }
 
-    
+
     public function getDetailedPositionId(): ?int
     {
         return $this->detailed_position_id;

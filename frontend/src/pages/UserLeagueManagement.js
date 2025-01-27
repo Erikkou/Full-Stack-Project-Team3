@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LeagueDetailsPopup from "./LeagueDetailsPopup"; // Import popup component
+import TeamDetailsPopup from "./TeamDetailsPopup"; // Import popup component
 
 const UserLeagueManagement = () => {
   const [activeTab, setActiveTab] = useState("show");
@@ -58,7 +58,7 @@ const UserLeagueManagement = () => {
 
       {/* League Details Popup */}
       {showLeaguePopup && (
-        <LeagueDetailsPopup
+        <TeamDetailsPopup
           league={selectedLeague}
           onClose={() => setShowLeaguePopup(false)} // Close the popup
         />

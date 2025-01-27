@@ -17,7 +17,7 @@ const Login = () => {
         try {
             const response = await Api.post('/api/login', credentials);
             localStorage.setItem('token', response.data.token);
-            navigate('/profile');
+            navigate('/games-overview');
         } catch (error) {
             setMessage(error.response?.data?.message || 'Invalid login credentials.');
         }
