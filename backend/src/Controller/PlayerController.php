@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Entity\Team;
 use App\Utils\ApiClient;
+use App\Utils\Position;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Handler\Curl\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,32 +22,43 @@ class PlayerController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ApiClient              $client,
-    )
-
-    {
+        private readonly ApiClient $client,
+    ) {
     }
 
-    #[Route('/api/players/team/{team}', name: 'get_players_per_team', methods: ['GET'])]
-    public function getPlayers(string $team): JsonResponse
+    #[Route('/api/players', name: 'get_players', methods: ['GET'])]
+    public function getPlayers(): JsonResponse
     {
-        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
-        if (!$teamEntity) {
-            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
-        }
+        // Haal het team op door de naam te matchen met het 'name' veld in je database
+//        $teamEntity = $this->entityManager->getRepository(Team::class)->findOneBy(['id' => $team]);
+//        if (!$teamEntity) {
+//            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
+//        }
 
-        $players = $this->entityManager->getRepository(Player::class)->findBy(['team' => $teamEntity]);
+
+        // Haal de spelers op die aan dit team gekoppeld zijn
+        $players = $this->entityManager->getRepository(Player::class)->findAll();
 
         $data = [];
         foreach ($players as $player) {
+            $position = match ($player->getPositionId()) {
+                24 => Position::GOALKEEPER,
+                25 => Position::DEFENDER,
+                26 => Position::MIDFIELDER,
+                27 => Position::ATTACKER,
+                28 => Position::UNKNOWN,
+                default => null,
+            };
+
             $data[] = [
                 'id' => $player->getId(),
                 'name' => $player->getName(),
                 'display_name' => $player->getDisplayName(),
                 'team' => $player->getTeam()->getName(),
                 'jersey_number' => $player->getJerseyNumber(),
-                'position_id' => $player->getPositionId(),
+                'position' => $position,
                 'detailed_position_id' => $player->getDetailedPositionId(),
+                'price' => $player->getPrice(),
             ];
         }
 
@@ -61,35 +74,25 @@ class PlayerController extends AbstractController
             return new JsonResponse(['message' => 'Player not found'], Response::HTTP_NOT_FOUND);
         }
 
+        $position = match ($player->getPositionId()) {
+            24 => Position::GOALKEEPER,
+            25 => Position::DEFENDER,
+            26 => Position::MIDFIELDER,
+            27 => Position::ATTACKER,
+            28 => Position::UNKNOWN,
+            default => null,
+        };
+
         return new JsonResponse([
             'id' => $player->getId(),
             'name' => $player->getName(),
             'display_name' => $player->getDisplayName(),
             'team' => $player->getTeam()->getName(),
             'jersey_number' => $player->getJerseyNumber(),
-            'position_id' => $player->getPositionId(),
+            'position_id' => $position,
             'detailed_position_id' => $player->getDetailedPositionId(),
+            'price' => $player->getPrice(),
         ]);
-    }
-
-    #[Route('/api/players', name: 'get_all_players', methods: ['GET'])]
-    public function getAllePlayers(): JsonResponse
-    {
-        $players = $this->entityManager->getRepository(Player::class)->findAll();
-
-        $data = array_map(function (Player $player) {
-            return [
-                'id' => $player->getId(),
-                'name' => $player->getName(),
-                'display_name' => $player->getDisplayName(),
-                'team' => $player->getTeam() ? $player->getTeam()->getName() : null,
-                'jersey_number' => $player->getJerseyNumber(),
-                'position_id' => $player->getPositionId(),
-                'detailed_position_id' => $player->getDetailedPositionId(),
-            ];
-        }, $players);
-
-        return new JsonResponse($data);
     }
 
     /**
@@ -100,7 +103,7 @@ class PlayerController extends AbstractController
      * @throws ClientExceptionInterface
      */
     #[Route('/api/players/save/{team}', name: 'save_players')]
-    public function savePlayers(string $team, EntityManagerInterface $em): JsonResponse
+    public function savePlayers(string $team, EntityManagerInterface $em)
     {
         $teamEntity = $em->getRepository(Team::class)->find($team);
 

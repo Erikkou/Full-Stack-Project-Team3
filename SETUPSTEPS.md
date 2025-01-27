@@ -77,3 +77,6 @@ Als je problemen ondervindt controleer dan de logs van de containers:
 Controleer de rechten van je projectdirectory (op je hostmachine) en zorg ervoor dat deze volledig toegankelijk is voor de Docker container, ga naar je projectmap en voer het volgende commando uit::
 
 sudo chmod -R 777 .
+
+### Data base setup
+- php bin/console doctrine:migrations:migrate
