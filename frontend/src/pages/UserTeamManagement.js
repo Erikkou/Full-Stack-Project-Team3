@@ -146,9 +146,9 @@ const UserTeamManagement = () => {
         handleDeleteTeam(index);
     };
 
-    return (
-        <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90 mt-10">
-            <h1 className="text-2xl font-bold mb-6">Manage Your Team</h1>
+  return (
+      <div className="min-h-screen bg-gray-800 text-white p-6 left-0 right-0 w-full opacity-90 mt-10 overflow-y-auto">
+        <h1 className="text-2xl font-bold mb-6">Manage Your Team</h1>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {/* Render saved teams */}
@@ -184,18 +184,18 @@ const UserTeamManagement = () => {
                 ))}
             </div>
 
-            {/* Modal for creating or editing teams */}
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 mt-10">
-                    <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6">
-                        <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
-                        <p className="mb-2">
-                            Players Selected:{" "}
-                            <span className="text-green-400">{playersSelected.length}/11</span>
-                        </p>
-                        <p className="mb-6">
-                            {/*Budget: <span className="text-yellow-400">${budget}</span>*/}
-                        </p>
+        {/* Modal for creating or editing teams */}
+        {isModalOpen && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 mt-10">
+              <div className="bg-gray-800 text-white rounded-lg shadow-lg w-11/12 max-w-6xl p-6 overflow-y-auto max-h-full">
+                <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
+                <p className="mb-2">
+                  Players Selected:{" "}
+                  <span className="text-green-400">{playersSelected.length}/15</span>
+                </p>
+                <p className="mb-6">
+                  Budget: <span className="text-yellow-400">${budget}</span>
+                </p>
 
                         <div className="flex flex-wrap md:flex-nowrap mb-6">
                             <div className="w-full md:w-1/2 p-2">

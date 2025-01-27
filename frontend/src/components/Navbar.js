@@ -9,7 +9,7 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="bg-gray-900 text-white p-4 fixed top-0 left-0 right-0 w-full shadow-lg z-10">
+    <nav className="bg-gray-900 text-white p-4 fixed top-0 left-0 right-0 w-full shadow-lg z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
@@ -45,12 +45,12 @@ const Navbar = () => {
               Admin Dashboard
             </Link>
           )}
-          {authState.isLoggedIn && authState.role === "user" && (
+          {authState.isLoggedIn && (
             <Link
-              to="/dashboard"
+              to="/user-profile"
               className="hover:text-blue-400 transition duration-200"
             >
-              Mijn Dashboard
+              Profiel
             </Link>
           )}
 
@@ -91,7 +91,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-700 p-4">
+        <div className="md:hidden bg-gray-700 p-4 z-40 relative">
           {/* Always visible links */}
           <Link
             to="/"

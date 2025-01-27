@@ -34,6 +34,7 @@ import GameDetails from "./pages/GameDetails";
 // Auth Context
 import {AuthProvider} from "./AuthContext";
 import LeaderboardDetailsPopup from "./pages/LeaderboardDetailsPopup";
+import TeamDetailsPopup from "./pages/TeamDetailsPopup";
 
 const App = () => {
     return (
