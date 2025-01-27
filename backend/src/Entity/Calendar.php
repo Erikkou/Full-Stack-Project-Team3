@@ -14,7 +14,7 @@ class Calendar
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'away_team')]
+    #[ORM\ManyToOne(inversedBy: 'home_team')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $home_team = null;
 

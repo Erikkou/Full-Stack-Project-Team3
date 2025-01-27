@@ -109,25 +109,25 @@ class Team
      */
     public function getHomeTeam(): Collection
     {
-        return $this->away_team;
+        return $this->home_team;
     }
 
-    public function addHomeTeam(Calendar $awayTeam): static
+    public function addHomeTeam(Calendar $home_team): static
     {
-        if (!$this->away_team->contains($awayTeam)) {
-            $this->away_team->add($awayTeam);
-            $awayTeam->setHomeTeam($this);
+        if (!$this->home_team->contains($home_team)) {
+            $this->home_team->add($home_team);
+            $home_team->setHomeTeam($this);
         }
 
         return $this;
     }
 
-    public function removeHomeTeam(Calendar $awayTeam): static
+    public function removeHomeTeam(Calendar $home_team): static
     {
-        if ($this->away_team->removeElement($awayTeam)) {
+        if ($this->home_team->removeElement($home_team)) {
             // set the owning side to null (unless already changed)
-            if ($awayTeam->getHomeTeam() === $this) {
-                $awayTeam->setHomeTeam(null);
+            if ($home_team->getHomeTeam() === $this) {
+                $home_team->setHomeTeam(null);
             }
         }
 
