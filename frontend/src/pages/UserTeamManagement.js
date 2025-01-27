@@ -255,10 +255,9 @@ const UserTeamManagement = () => {
                                             onClick={() => handlePlayerSelect(player)}
                                         >
                                             <p className="font-bold">{player.name}</p>
-                                            <p>Position: {player.position_id}</p>
-                                            <p>Jersey
-                                                Number: {player.jersey_number !== null ? player.jersey_number : "N/A"}</p>
-
+                                            <p>Position: {player.position}</p>
+                                            <p>Jersey  Number: {player.jersey_number !== null ? player.jersey_number : "N/A"}</p>
+                                            <p>player price: {player.price !== null ? player.price : "N/A"}</p>
 
                                         </div>
                                     ))}
