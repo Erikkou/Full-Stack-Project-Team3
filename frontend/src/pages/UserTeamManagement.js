@@ -11,7 +11,7 @@ const UserTeamManagement = () => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(true);
     const [playersSelected, setPlayersSelected] = useState([]);
-    const [budget, setBudget] = useState(300);
+    // const [budget, setBudget] = useState(300);
     const [savedTeams, setSavedTeams] = useState([]);
     const [teamName, setTeamName] = useState("");
 
@@ -95,7 +95,7 @@ const UserTeamManagement = () => {
             setPlayersSelected([...playersSelected, player]);
             // setBudget(budget - player.price);
         } else {
-            alert("Cannot add more players or insufficient budget");
+            alert("Cannot add more players ");  //or insufficient budget
         }
     };
 
@@ -113,7 +113,7 @@ const UserTeamManagement = () => {
         const newTeam = {
             name: teamName,
             players: playersSelected.map((player) => player.id),
-            remainingBudget: budget,
+            // remainingBudget: budget,
         };
 
         try {
@@ -122,7 +122,7 @@ const UserTeamManagement = () => {
             setSavedTeams([...savedTeams, newTeam]);
             setTeamName("");
             setPlayersSelected([]);
-            setBudget(300);
+            // setBudget(300);
             setIsModalOpen(false);
         } catch (error) {
             console.error("Error saving team:", error);
@@ -140,7 +140,7 @@ const UserTeamManagement = () => {
     const handleModifyTeam = (index) => {
         const teamToEdit = savedTeams[index];
         setPlayersSelected(teamToEdit.players);
-        setBudget(teamToEdit.remainingBudget);
+        // setBudget(teamToEdit.remainingBudget);
         setTeamName(teamToEdit.name);
         setIsModalOpen(true);
         handleDeleteTeam(index);
@@ -158,7 +158,7 @@ const UserTeamManagement = () => {
                         className="bg-gray-700 p-4 rounded shadow-md border border-gray-500"
                     >
                         <h3 className="text-lg font-bold mb-2">{team.name}</h3>
-                        <p className="text-yellow-400 mb-2">Remaining Budget: ${team.remainingBudget}</p>
+                        {/*<p className="text-yellow-400 mb-2">Remaining Budget: ${team.remainingBudget}</p>*/}
                         <ul className="text-gray-300 text-sm">
                             {team.players.map((player, idx) => (
                                 <li key={idx}>
@@ -194,7 +194,7 @@ const UserTeamManagement = () => {
                             <span className="text-green-400">{playersSelected.length}/11</span>
                         </p>
                         <p className="mb-6">
-                            Budget: <span className="text-yellow-400">${budget}</span>
+                            {/*Budget: <span className="text-yellow-400">${budget}</span>*/}
                         </p>
 
                         <div className="flex flex-wrap md:flex-nowrap mb-6">
