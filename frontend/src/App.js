@@ -21,6 +21,7 @@ import MatchScheduling from "./pages/MatchScheduling";
 import ResultsAndStandings from "./pages/ResultsAndStandings";
 import AdminBlogs from "./pages/AdminBlogs";
 import BlogPage from "./pages/BlogPage";
+import BlogDetails from "./pages/BlogPageDetail";
 import UserDashboard from "./pages/UserDashboard";
 import UserTeamManagement from "./pages/UserTeamManagement";
 import UserLeagueManagement from "./pages/UserLeagueManagement";
@@ -50,6 +51,7 @@ const App = () => {
                             <Route path="/signup" element={<SignupPage/>}/>
                             <Route path="/profile" element={<Profile/>}/>
                             <Route path="/blogs" element={<BlogPage/>}/>
+                            <Route path="/blog/show/:id" element={<BlogDetails/>}/>
                             <Route path="/games-overview" element={<GamesOverview/>}/>
                             <Route path="/game-details/:gameId" element={<GameDetails/>}/>
 

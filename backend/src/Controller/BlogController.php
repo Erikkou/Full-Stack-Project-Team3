@@ -16,7 +16,7 @@ class BlogController extends AbstractController
     {
     }
 
-    #[Route('/blog', name: 'blog_index', methods: ['GET'])]
+    #[Route('/blogs', name: 'blog_index', methods: ['GET'])]
     public function index(): JsonResponse
     {
         $blogs = $this->entityManager->getRepository(Blog::class)->findAll();
@@ -31,6 +31,26 @@ class BlogController extends AbstractController
                 'img' => $blog->getImg(),
             ];
         }, $blogs);
+
+        return $this->json($data);
+    }
+
+    #[Route('/blog/show/{id}', name: 'blog_show', methods: ['GET'])]
+    public function showBlog(int $id): JsonResponse
+    {
+        $blog = $this->entityManager->getRepository(Blog::class)->find($id);
+
+        if (!$blog) {
+            return $this->json(['error' => 'Blog not found'], 404);
+        }
+        $data = [
+            'id' => $blog->getId(),
+            'title' => $blog->getTitle(),
+            'description' => $blog->getDescription(),
+            'author' => $blog->getAuthor(),
+            'date' => $blog->getDate()->format('d-m-Y'),
+            'img' => $blog->getImg(),
+        ];
 
         return $this->json($data);
     }
