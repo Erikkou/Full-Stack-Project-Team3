@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Rounds
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
