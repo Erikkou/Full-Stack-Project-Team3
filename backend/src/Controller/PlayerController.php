@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Entity\Team;
 use App\Utils\ApiClient;
+use App\Utils\Position;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Handler\Curl\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,20 +35,30 @@ class PlayerController extends AbstractController
 //            return new JsonResponse(['status' => 'error', 'message' => 'Team not found'], 404);
 //        }
 
+
         // Haal de spelers op die aan dit team gekoppeld zijn
         $players = $this->entityManager->getRepository(Player::class)->findAll();
 
         $data = [];
         foreach ($players as $player) {
+            $position = match ($player->getPositionId()) {
+                24 => Position::GOALKEEPER,
+                25 => Position::DEFENDER,
+                26 => Position::MIDFIELDER,
+                27 => Position::ATTACKER,
+                28 => Position::UNKNOWN,
+                default => null,
+            };
+
             $data[] = [
                 'id' => $player->getId(),
                 'name' => $player->getName(),
                 'display_name' => $player->getDisplayName(),
                 'team' => $player->getTeam()->getName(),
                 'jersey_number' => $player->getJerseyNumber(),
-                'position' => $player->getPositionId(),
+                'position' => $position,
                 'detailed_position_id' => $player->getDetailedPositionId(),
-                'price' => '1232$',
+                'price' => $player->getPrice(),
             ];
         }
 
@@ -62,14 +74,24 @@ class PlayerController extends AbstractController
             return new JsonResponse(['message' => 'Player not found'], Response::HTTP_NOT_FOUND);
         }
 
+        $position = match ($player->getPositionId()) {
+            24 => Position::GOALKEEPER,
+            25 => Position::DEFENDER,
+            26 => Position::MIDFIELDER,
+            27 => Position::ATTACKER,
+            28 => Position::UNKNOWN,
+            default => null,
+        };
+
         return new JsonResponse([
             'id' => $player->getId(),
             'name' => $player->getName(),
             'display_name' => $player->getDisplayName(),
             'team' => $player->getTeam()->getName(),
             'jersey_number' => $player->getJerseyNumber(),
-            'position_id' => $player->getPositionId(),
+            'position_id' => $position,
             'detailed_position_id' => $player->getDetailedPositionId(),
+            'price' => $player->getPrice(),
         ]);
     }
 

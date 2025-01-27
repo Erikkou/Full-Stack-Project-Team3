@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import "./App.css";
 
 // Components
@@ -29,11 +29,11 @@ import UserStats from "./pages/UserStats";
 import UserProfile from "./pages/UserProfile";
 import GamesOverview from "./pages/GamesOverview";
 import GameDetails from "./pages/GameDetails";
-import PlayerList from "./components/PlayerComponent/PlayerList";
 
 
 // Auth Context
-import { AuthProvider } from "./AuthContext";
+import {AuthProvider} from "./AuthContext";
+import LeaderboardDetailsPopup from "./pages/LeaderboardDetailsPopup";
 import TeamDetailsPopup from "./pages/TeamDetailsPopup";
 
 const App = () => {
@@ -41,39 +41,39 @@ const App = () => {
         <AuthProvider>
             <Router>
                 <div className="App">
-                    <Navbar />
+                    <Navbar/>
                     <BackgroundSection>
                         <Routes>
                             {/* Public Routes */}
-                            <Route path="/" element={<MainContent />} />
-                            <Route path="/login" element={<LoginPage />} />
-                            <Route path="/signup" element={<SignupPage />} />
-                            <Route path="/profile" element={<Profile />} />
-                            <Route path="/blogs" element={<BlogPage />} />
-                            <Route path="/games-overview" element={<GamesOverview />} />
-                            <Route path="/game-details/:gameId" element={<GameDetails />} />
-                            <Route path="/player-list" element={<PlayerList />} />
+                            <Route path="/" element={<MainContent/>}/>
+                            <Route path="/login" element={<LoginPage/>}/>
+                            <Route path="/signup" element={<SignupPage/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/blogs" element={<BlogPage/>}/>
+                            <Route path="/games-overview" element={<GamesOverview/>}/>
+                            <Route path="/game-details/:gameId" element={<GameDetails/>}/>
 
                             {/* Admin Routes */}
-                            <Route path="/admin" element={<AdminLayout />} />
-                            <Route path="/admin/league-management" element={<LeagueManagement />} />
-                            <Route path="/admin/team-management" element={<TeamManagement />} />
-                            <Route path="/admin/user-management" element={<UserManagement />} />
-                            <Route path="/admin/match-scheduling" element={<MatchScheduling />} />
-                            <Route path="/admin/results-and-standings" element={<ResultsAndStandings />} />
-                            <Route path="/admin/AdminBlogs" element={<AdminBlogs />} />
+                            <Route path="/admin" element={<AdminLayout/>}/>
+                            <Route path="/admin/league-management" element={<LeagueManagement/>}/>
+                            <Route path="/admin/team-management" element={<TeamManagement/>}/>
+                            <Route path="/admin/user-management" element={<UserManagement/>}/>
+                            <Route path="/admin/match-scheduling" element={<MatchScheduling/>}/>
+                            <Route path="/admin/results-and-standings" element={<ResultsAndStandings/>}/>
+                            <Route path="/admin/AdminBlogs" element={<AdminBlogs/>}/>
 
                             {/* User Routes */}
-                            <Route path="/dashboard" element={<UserDashboard />} />
-                            <Route path="/settings" element={<UserSettings />} />
-                            <Route path="/user-team-management/:gameId" element={<UserTeamManagement />} />
-                            <Route path="/user-league-management" element={<UserLeagueManagement />} />
-                            <Route path="/predict-result" element={<PredictResult />} />
-                            <Route path="/user/stats" element={<UserStats />} />
-                            <Route path="/user-profile" element={<UserProfile />} />
+                            <Route path="/dashboard" element={<UserDashboard/>}/>
+                            <Route path="/settings" element={<UserSettings/>}/>
+                            <Route path="/user-team-management/:gameId" element={<UserTeamManagement/>}/>
+                            <Route path="/user-league-management" element={<UserLeagueManagement/>}/>
+                            <Route path="/leaderboard/:teamId" element={<LeaderboardDetailsPopup/>}/>
+                            <Route path="/predict-result" element={<PredictResult/>}/>
+                            <Route path="/user/stats" element={<UserStats/>}/>
+                            <Route path="/user-profile" element={<UserProfile/>}/>
                         </Routes>
                     </BackgroundSection>
-                    <Footer />
+                    <Footer/>
                 </div>
             </Router>
         </AuthProvider>

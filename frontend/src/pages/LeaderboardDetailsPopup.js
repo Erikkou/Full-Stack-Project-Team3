@@ -1,52 +1,58 @@
-// LeaderboardDetailsPopup.js
 import React, { useState, useEffect } from "react";
+import Api from "../Api";
+import { useParams } from "react-router-dom";
 
 const LeaderboardDetailsPopup = () => {
-    const [players, setPlayers] = useState([]); // State for player data
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [players, setPlayers] = useState([]);
+    const { teamId } = useParams(); // Retrieve the team ID from the URL
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch leaderboard data (placeholder for now)
         const fetchLeaderboardData = async () => {
             setIsLoading(true);
+            setError(null);
+
             try {
-                // For now, simulate data fetch
-                const dummyLeaderboard = [
-                    { name: "Player 1", points: 120 },
-                    { name: "Player 2", points: 115 },
-                    { name: "Player 3", points: 110 },
-                ];
-                setPlayers(dummyLeaderboard);
-                setIsLoading(false);
+                console.log("Fetching players for teamId:", teamId); // Debug log
+                const response = await Api.get(`/api/players/team/${teamId}`);
+                console.log("Fetched players:", response.data); // Debug log
+                setPlayers(response.data);
             } catch (error) {
                 console.error("Error fetching leaderboard data:", error);
                 setError("Failed to load leaderboard.");
+            } finally {
                 setIsLoading(false);
             }
         };
 
         fetchLeaderboardData();
-    }, []);
+    }, [teamId]); // Re-fetch data if teamId changes
 
     return (
         <div className="flex-1 bg-gray-700 p-6 rounded-lg">
-            <h2 className="text-xl font-bold !text-yellow-400 mb-4">Leaderboard</h2>
-            {/* Loading spinner or error message */}
+            <h2 className="text-xl font-bold text-yellow-400 mb-4">Leaderboard</h2>
             {isLoading ? (
                 <p className="text-gray-400">Loading leaderboard...</p>
             ) : error ? (
                 <p className="text-red-400">{error}</p>
-            ) : (
+            ) : players.length > 0 ? (
                 <ul className="space-y-4">
-                    {/* Show list of players */}
-                    {players.map((player, index) => (
-                        <li key={index} className="flex justify-between">
-                            <span>{player.name}</span>
-                            <span className="font-bold text-yellow-400">{player.points} pts</span>
+                    {players.map((player) => (
+                        <li
+                            key={player.id}
+                            className="flex justify-between bg-gray-800 p-4 rounded-lg shadow-md"
+                        >
+                            <div>
+                                <p className="font-bold text-white">{player.name}</p>
+                                <p className="text-gray-400">Jersey Number: {player.jersey_number || "N/A"}</p>
+                            </div>
+                            <p className="text-yellow-400">{player.team}</p>
                         </li>
                     ))}
                 </ul>
+            ) : (
+                <p className="text-gray-400">No players found for this team.</p>
             )}
         </div>
     );

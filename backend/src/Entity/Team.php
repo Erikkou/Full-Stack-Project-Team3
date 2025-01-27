@@ -19,13 +19,19 @@ class Team
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'teams')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private ?User $user = null;
 
+    /**
+     * @var Collection<int, Calendar>
+     */
+    #[ORM\OneToMany(mappedBy: 'home_team', targetEntity: Calendar::class)]
+    private Collection $home_team;
+    #[ORM\OneToMany(mappedBy: 'away_team', targetEntity: Calendar::class)]
+    private Collection $away_team;
     public function __construct()
     {
         $this->players = new ArrayCollection();
+        $this->away_team = new ArrayCollection();
+        $this->home_team = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,14 +74,62 @@ class Team
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection<int, Calendar>
+     */
+    public function getAwayTeam(): Collection
     {
-        return $this->user;
+        return $this->away_team;
     }
 
-    public function setUser(?User $user): self
+    public function addAwayTeam(Calendar $awayTeam): static
     {
-        $this->user = $user;
+        if (!$this->away_team->contains($awayTeam)) {
+            $this->away_team->add($awayTeam);
+            $awayTeam->setAwayTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAwayTeam(Calendar $awayTeam): static
+    {
+        if ($this->away_team->removeElement($awayTeam)) {
+            // set the owning side to null (unless already changed)
+            if ($awayTeam->getAwayTeam() === $this) {
+                $awayTeam->setAwayTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Calendar>
+     */
+    public function getHomeTeam(): Collection
+    {
+        return $this->home_team;
+    }
+
+    public function addHomeTeam(Calendar $home_team): static
+    {
+        if (!$this->home_team->contains($home_team)) {
+            $this->home_team->add($home_team);
+            $home_team->setHomeTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHomeTeam(Calendar $home_team): static
+    {
+        if ($this->home_team->removeElement($home_team)) {
+            // set the owning side to null (unless already changed)
+            if ($home_team->getHomeTeam() === $this) {
+                $home_team->setHomeTeam(null);
+            }
+        }
 
         return $this;
     }
