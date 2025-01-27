@@ -95,7 +95,7 @@ const UserTeamManagement = () => {
             setPlayersSelected([...playersSelected, player]);
             // setBudget(budget - player.price);
         } else {
-            alert("Cannot add more players ");  //or insufficient budget
+            alert("Cannot add more players "); //or insufficient budget
         }
     };
 
@@ -193,9 +193,9 @@ const UserTeamManagement = () => {
                   Players Selected:{" "}
                   <span className="text-green-400">{playersSelected.length}/15</span>
                 </p>
-                <p className="mb-6">
-                  Budget: <span className="text-yellow-400">${budget}</span>
-                </p>
+                {/*<p className="mb-6">*/}
+                {/*  /!*Budget: <span className="text-yellow-400">${budget}</span>*!/*/}
+                {/*</p>*/}
 
                         <div className="flex flex-wrap md:flex-nowrap mb-6">
                             <div className="w-full md:w-1/2 p-2">
