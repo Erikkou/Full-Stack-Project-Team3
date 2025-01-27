@@ -9,12 +9,14 @@ const UserTeamManagement = () => {
     const [error, setError] = useState(null);
     const {gameId} = useParams();
     const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = useState(true); // Modal visibility state
-    const [playersSelected, setPlayersSelected] = useState([]); // Players selected for the team
-    const [budget, setBudget] = useState(300); // Team budget
-    const [savedTeams, setSavedTeams] = useState([]); // List of saved teams
-    const [teamName, setTeamName] = useState(""); // Team name input state
-    const [currentFormation, setCurrentFormation] = useState("4-3-3"); // Current formation selection
+    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [playersSelected, setPlayersSelected] = useState([]);
+    const [budget, setBudget] = useState(300);
+    const [savedTeams, setSavedTeams] = useState([]);
+    const [teamName, setTeamName] = useState("");
+
+
+    const [currentFormation, setCurrentFormation] = useState("4-3-3");
 
     const formations = {
         "4-3-3": [
@@ -83,42 +85,44 @@ const UserTeamManagement = () => {
     //     {id: 8, name: "Player 8", position: "Striker", price: 20, goals: 12},
     // ];
 
-    // Handle player selection (add or remove from the selected team)
+
     const handlePlayerSelect = (player) => {
-        if (playersSelected.includes(player)) {
-            setPlayersSelected(playersSelected.filter((p) => p !== player)); // Remove player
-            setBudget(budget + player.price); // Refund the player's price
-        } else if (playersSelected.length < 15 && budget >= player.price) {
-            setPlayersSelected([...playersSelected, player]); // Add player
-            setBudget(budget - player.price); // Deduct the player's price
+        const isPlayerSelected = playersSelected.some((p) => p.id === player.id);
+
+        if (isPlayerSelected) {
+            setPlayersSelected(playersSelected.filter((p) => p.id !== player.id));
+        } else if (playersSelected.length < 11) {
+            setPlayersSelected([...playersSelected, player]);
+            // setBudget(budget - player.price);
+        } else {
+            alert("Cannot add more players or insufficient budget");
         }
     };
 
-    // Handle saving the team
     const handleSaveTeam = async () => {
         if (!teamName.trim()) {
             alert("Please enter a team name before saving.");
             return;
         }
 
-        if (playersSelected.length !== 15) {
-            alert("Your squad must contain exactly 15 players.");
+        if (playersSelected.length !== 11) {
+            alert("Your squad must contain exactly 11 players.");
             return;
         }
 
         const newTeam = {
             name: teamName,
-            players: playersSelected.map((player) => player.id), // Alleen de IDs van spelers opslaan
+            players: playersSelected.map((player) => player.id),
             remainingBudget: budget,
         };
 
         try {
-            await Api.post("/api/teams", newTeam); // POST-aanroep naar backend
+            await Api.post("/api/teams", newTeam);
             alert("Team saved successfully!");
-            setSavedTeams([...savedTeams, newTeam]); // Voeg team toe aan saved teams
+            setSavedTeams([...savedTeams, newTeam]);
             setTeamName("");
             setPlayersSelected([]);
-            setBudget(300); // Reset budget
+            setBudget(300);
             setIsModalOpen(false);
         } catch (error) {
             console.error("Error saving team:", error);
@@ -127,20 +131,19 @@ const UserTeamManagement = () => {
     };
 
 
-    // Handle team deletion from saved teams
     const handleDeleteTeam = (index) => {
-        const updatedTeams = savedTeams.filter((_, i) => i !== index); // Remove team by index
+        const updatedTeams = savedTeams.filter((_, i) => i !== index);
         setSavedTeams(updatedTeams);
     };
 
-    // Handle team modification (edit an existing team)
+
     const handleModifyTeam = (index) => {
-        const teamToEdit = savedTeams[index]; // Get the team to edit
-        setPlayersSelected(teamToEdit.players); // Load team players
-        setBudget(teamToEdit.remainingBudget); // Load team budget
-        setTeamName(teamToEdit.name); // Load team name
-        setIsModalOpen(true); // Open the modal
-        handleDeleteTeam(index); // Remove the team from saved list
+        const teamToEdit = savedTeams[index];
+        setPlayersSelected(teamToEdit.players);
+        setBudget(teamToEdit.remainingBudget);
+        setTeamName(teamToEdit.name);
+        setIsModalOpen(true);
+        handleDeleteTeam(index);
     };
 
     return (
@@ -159,7 +162,7 @@ const UserTeamManagement = () => {
                         <ul className="text-gray-300 text-sm">
                             {team.players.map((player, idx) => (
                                 <li key={idx}>
-                                    - {player.name} ({player.position})
+                                    - {player.name} ({player.position_id})
                                 </li>
                             ))}
                         </ul>
@@ -188,7 +191,7 @@ const UserTeamManagement = () => {
                         <h2 className="text-xl font-bold mb-4 !text-white">Squad Selection</h2>
                         <p className="mb-2">
                             Players Selected:{" "}
-                            <span className="text-green-400">{playersSelected.length}/15</span>
+                            <span className="text-green-400">{playersSelected.length}/11</span>
                         </p>
                         <p className="mb-6">
                             Budget: <span className="text-yellow-400">${budget}</span>
@@ -249,12 +252,14 @@ const UserTeamManagement = () => {
                                                     ? "bg-green-600"
                                                     : "bg-gray-600 hover:bg-gray-500"
                                             }`}
-                                            onClick={() => handlePlayerSelect(player)} // Select player
+                                            onClick={() => handlePlayerSelect(player)}
                                         >
                                             <p className="font-bold">{player.name}</p>
-                                            <p>Position: {player.position}</p>
-                                            <p>Price: ${player.price}</p>
-                                            <p>Goals: {player.goals}</p>
+                                            <p>Position: {player.position_id}</p>
+                                            <p>Jersey
+                                                Number: {player.jersey_number !== null ? player.jersey_number : "N/A"}</p>
+
+
                                         </div>
                                     ))}
                                 </div>
